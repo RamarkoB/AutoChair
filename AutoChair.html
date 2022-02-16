@@ -1,0 +1,39 @@
+<!doctype html>
+<head>
+    <title>Ramarko's Auto Chair</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<html>
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="pills-delegates-tab" data-bs-toggle="pill" data-bs-target="#pills-delegates" type="button" role="tab" aria-controls="pills-delegates" aria-selected="true">Delegates</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="pills-motions-tab" data-bs-toggle="pill" data-bs-target="#pills-motions" type="button" role="tab" aria-controls="pills-motions" aria-selected="false">Motions</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="pills-speakers-tab" data-bs-toggle="pill" data-bs-target="#pills-speakers" type="button" role="tab" aria-controls="pills-speakers" aria-selected="false">Speakers</button>
+  </li>
+</ul>
+<div class="tab-content" id="pills-tabContent">
+  <div class="tab-pane fade show active" id="pills-delegates" role="tabpanel" aria-labelledby="pills-delegates-tab">
+    <div id="delegates" class="row">
+    </div>
+  </div>
+  <div class="tab-pane fade" id="pills-motions" role="tabpanel" aria-labelledby="pills-motions-tab">
+    <div id="motions">
+      <div id="newmotion"></div>
+      <div id="directives"></div> 
+      <div id="mods"></div>
+      <div id="unmods"></div>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="pills-speakers" role="tabpanel" aria-labelledby="pills-speakers-tab">
+    <div id="speakers"></div>
+  </div>
+</div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</html>
