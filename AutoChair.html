@@ -22,6 +22,22 @@
   </div>
   <div class="tab-pane fade" id="pills-motions" role="tabpanel" aria-labelledby="pills-motions-tab">
     <div id="motions">
+      <div id="motionMaker">
+        <select id="motionDelegate" class="delegateName">
+          <option value="noDelegate">No Delegates</option>
+        </select>
+        <select id="motionChosen">
+          <option value="mod">Moderated Caucus</option>
+          <option value="unmod">Unmoderated Caucus</option>
+          <option value="other">Other</option>
+        </select>
+        <div id="motionMods">
+          <input id="modMinutes" type="text" placeholder="Minutes">
+          <input id="modTime" type="text" placeholder="Speaking Time">
+          <input id="modTopic" type="text" placeholder="Topic">
+        </div>
+        <button id="addMotion" class="btn btn-primary" type="button">Add Motion</button>
+      </div>
       <div id="newmotion"></div>
       <div id="directives"></div> 
       <div id="mods"></div>
@@ -29,7 +45,14 @@
     </div>
   </div>
   <div class="tab-pane fade" id="pills-speakers" role="tabpanel" aria-labelledby="pills-speakers-tab">
-    <div id="speakers"></div>
+    <div id="speakers">
+      <div id="speakerMaker" class="input-group">
+        <input id="minutes" type="text" class="form-control" placeholder="Minutes">
+        <input id="speakingTime" type="text" class="form-control" placeholder="Speaking Time">
+          <button id="genspeakers" class="btn btn-primary" type="button">Generate List</button>
+          <button id="refreshspeakers" class="btn btn-primary" type="button">Refresh</button>
+        </div>
+    </div>
   </div>
 </div>
 

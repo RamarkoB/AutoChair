@@ -18,7 +18,7 @@ function genDelegateList(num){
 }
 
 //input: The list of all delegates in comittee
-//output: an attendece sheet on delegate tab
+//output: creates an attendence sheet on the delegates tab
 function nameDelegates(nameList){
     //creates delegate list div to store delegates in
     const delList = document.createElement("div")
@@ -146,20 +146,6 @@ function nameDelegates(nameList){
     delegatesDiv.appendChild(delList);
 }
 
-//finds the list of all delegates marked as present
-function getDelegates(){
-    //gets list of all elements with class "present"
-    const presentList = document.getElementsByClassName("present");
-
-    //for element in list, grabs name and adds to list
-    const presentNames = [];
-    for (var i = 0; i < presentList.length; i++)
-    {
-        presentNames.push(presentList[i].innerText);
-    }
-    return(presentNames);
-}
-
 //input: number of present delegates
 //output: calculated majorities on delegates tab
 function countDelegates(presentCount){
@@ -203,88 +189,9 @@ function countDelegates(presentCount){
     }
 }
 
-function updateDelegates(){
-    const delList = getDelegates();
-    countDelegates(delList.length);
-    updateMotions(delList);
-
-    const delegateNames = document.getElementsByClassName("delegateName");
-    for (var i = 0; i < delegateNames.length; i++)
-    {
-        const delegates = delegateNames[i];
-        while (delegates.lastChild) {
-            delegates.removeChild(delegates.lastChild);
-        }
-
-        if (delList.length == 0){
-            const noDelegate = document.createElement("option");
-            noDelegate.value = "noDelegate";
-            noDelegate.innerText= "No Delegates";
-
-            delegateNames[i].appendChild(noDelegate);
-        }
-        else{
-            for (var j = 0; j < delList.length; j++){
-                const delegate = document.createElement("option");
-                const name = delList[j];
-                delegate.value = name.replace(" ","_");
-                delegate.innerText = name;
-    
-                delegateNames[i].appendChild(delegate);
-            }
-        }
-    }
-}
-
-function countSpeakers(){
-    const speakerCount = document.createElement("div");
-
-    const minutes = document.createElement("input")
-    minutes.id = "minutes";
-    minutes.type = "text";
-    minutes.placeholder = "Minutes";
-
-    const speakingTime = document.createElement("input")
-    speakingTime.id = "speakingTime";
-    speakingTime.type = "text";
-    speakingTime.placeholder = "Speaking Time";
-
-    const calculate = document.createElement("input");
-    calculate.type = "button";
-    calculate.value = "Generate List";
-    calculate.classList.add("btn");
-    calculate.classList.add("btn-primary");
-
-    calculate.addEventListener("click", function(){
-        minutesInput = parseFloat(document.getElementById("minutes").value);
-        timeInput = parseFloat(document.getElementById("speakingTime").value);
-        genSpeakersList(minutesInput,timeInput);
-    })
-
-    const refresh = document.createElement("input");
-    refresh.type = "button";
-    refresh.value = "Refresh";
-    refresh.classList.add("btn");
-    refresh.classList.add("btn-primary");
-
-    refresh.addEventListener("click", function(){
-        minutes.value = null;
-        speakingTime.value = null;
-        speakerList = document.getElementById("speakerList")
-        if (speakerList){
-            speakerList.remove()
-        }
-    });
-
-    speakerCount.appendChild(minutes);
-    speakerCount.appendChild(speakingTime);
-    speakerCount.appendChild(calculate);
-    speakerCount.appendChild(refresh);
-
-    speakersdiv = document.getElementById("speakers");
-    speakersdiv.appendChild(speakerCount);
-}
-
+//input: the total number of minute the unmod lasts
+//input: the speaking time for each speech
+//output: produces a speaker's list on the speakers tab
 function genSpeakersList(minutes, speakingTime){
     if (document.getElementById("speakerList")){
         document.getElementById("speakerList").remove()
@@ -323,125 +230,143 @@ function genSpeakersList(minutes, speakingTime){
     speakersdiv.appendChild(speakerList);
 }
 
-function motionMaker(){
-    const motion = document.createElement("div");
-    motion.className = "motion"
+//finds the list of all delegates marked as present
+function getDelegates(){
+    //gets list of all elements with class "present"
+    const presentList = document.getElementsByClassName("present");
 
-    const handRaised = document.createElement("select");
-    handRaised.classList.add("delegateName");
+    //for element in list, grabs name and adds to list
+    const presentNames = [];
+    for (var i = 0; i < presentList.length; i++)
+    {
+        presentNames.push(presentList[i].innerText);
+    }
+    return(presentNames);
+}
 
-    const noDelegate = document.createElement("option");
-    noDelegate.value = "noDelegate";
-    noDelegate.innerText= "No Delegates";
+//updates the entire page whenever a delegate is added or removed from attendence
+function updateDelegates(){
+    const delList = getDelegates();
+    countDelegates(delList.length);
 
-    handRaised.appendChild(noDelegate);
+    const delegateNames = document.getElementsByClassName("delegateName");
+    for (var i = 0; i < delegateNames.length; i++)
+    {
+        const delegates = delegateNames[i];
+        while (delegates.lastChild) {
+            delegates.removeChild(delegates.lastChild);
+        }
+
+        if (delList.length == 0){
+            const noDelegate = document.createElement("option");
+            noDelegate.value = "noDelegate";
+            noDelegate.innerText= "No Delegates";
+
+            delegateNames[i].appendChild(noDelegate);
+        }
+        else{
+            for (var j = 0; j < delList.length; j++){
+                const delegate = document.createElement("option");
+                const name = delList[j];
+                delegate.value = name.replace(" ","_");
+                delegate.innerText = name;
     
+                delegateNames[i].appendChild(delegate);
+            }
+        }
+    }
+}
 
-    const choose = document.createElement("select");
-    choose.id = "chosenMotion";
+//add functionaility to various interactible elements
+function buttonfunctions(){
+    document.getElementById("genspeakers").addEventListener("click", function(){
+        const minutes = document.getElementById("minutes");
+        const speakingTime = document.getElementById("speakingTime");
+        minutesInput = parseFloat(document.getElementById("minutes").value);
+        timeInput = parseFloat(document.getElementById("speakingTime").value);
+        genSpeakersList(minutesInput,timeInput);
+    })
 
-    const mod = document.createElement("option");
-    mod.value = "mod";
-    mod.innerText = "Moderated Caucus";
+    document.getElementById("refreshspeakers").addEventListener("click", function(){
+        const minutes = document.getElementById("minutes");
+    const speakingTime = document.getElementById("speakingTime");
+        minutes.value = null;
+        speakingTime.value = null;
+        speakerList = document.getElementById("speakerList")
+        if (speakerList){
+            speakerList.remove()
+        }
+    });
 
-    const unmod = document.createElement("option");
-    unmod.value = "unmod";
-    unmod.innerText = "Unmoderated Caucus";
-
-    const other = document.createElement("option");
-    other.value = "other";
-    other.innerText = "Other";
-
-    choose.appendChild(mod);
-    choose.appendChild(unmod);
-    choose.appendChild(other);
-
-    const modifications = document.createElement("div");
-    modifications.classList.add("modifications");
-    motionModifications(choose.value, modifications);
-
-    choose.addEventListener("change", function(){
+    document.getElementById("motionChosen").addEventListener("change", function(event){
+        motion = event.target.value
+        const modifications = document.getElementById("motionMods");
         while (modifications.lastChild) {
             modifications.removeChild(modifications.lastChild);
         }
-        motionModifications(choose.value, modifications);
+        if (motion == "mod"){
+            const minutes = document.createElement("input")
+            minutes.class = "minutes";
+            minutes.type = "text";
+            minutes.placeholder = "Minutes";
+    
+            const speakingTime = document.createElement("input")
+            speakingTime.class = "speakingTime";
+            speakingTime.type = "text";
+            speakingTime.placeholder = "Speaking Time";
+    
+            const topic = document.createElement("input")
+            topic.class = "topic";
+            topic.type = "text";
+            topic.placeholder = "Topic";
+    
+            modifications.appendChild(minutes);
+            modifications.appendChild(speakingTime);
+            modifications.appendChild(topic);
+        }
+        else if (motion == "unmod"){
+            const minutes = document.createElement("input")
+            minutes.id = "minutes";
+            minutes.type = "text";
+            minutes.placeholder = "Minutes";
+    
+            modifications.appendChild(minutes);
+        }
     })
-
-    const add = document.createElement("input");
-    add.type = ("submit");
-
-
-    motion.appendChild(handRaised);
-    motion.appendChild(choose);
-    motion.appendChild(modifications);
-    motion.appendChild(add);
-
-    motionsDiv = document.getElementById("motions");
-    motionsDiv.append(motion);
 }
 
-function motionModifications(motion, div){
-    if (motion == "mod"){
-        const minutes = document.createElement("input")
-        minutes.class = "minutes";
-        minutes.type = "text";
-        minutes.placeholder = "Minutes";
-
-        const speakingTime = document.createElement("input")
-        speakingTime.class = "speakingTime";
-        speakingTime.type = "text";
-        speakingTime.placeholder = "Speaking Time";
-
-        const topic = document.createElement("input")
-        topic.class = "topic";
-        topic.type = "text";
-        topic.placeholder = "Topic";
-
-        div.appendChild(minutes);
-        div.appendChild(speakingTime);
-        div.appendChild(topic);
-    }
-    else if (motion == "unmod"){
-        const minutes = document.createElement("input")
-        minutes.id = "minutes";
-        minutes.type = "text";
-        minutes.placeholder = "Minutes";
-
-        div.appendChild(minutes);
-    }
+function tongaNames() {
+    return(
+        ["Feleti Vaka'uta Sevele",
+            "Siale 'Ataongo Kaho",
+            "Samiuela 'Akilisi P\u014Diva",
+            "Sonatane Tu'akinamolahi Taumopeau Tupou",
+            "Clive Edwards",
+            "Malakai Fakatoufifita",
+            "Viliami Ta'u Tangi",
+            "'Etuate Lavulavu",
+            "Tu'ipelehake Viliami Tupoulahi Mailefihi Tuku'aho",
+            "Baron Fielakepa of Havelu",
+            "'Isileli Pulu",
+            "Afu'alo Matoto",
+            "Paul Karalus",
+            "Sione Laumanu'uli Luani",
+            "Sione Teisina Fuko",
+            "'Uliti Uata",
+            "Fineasi Funaki",
+            "Lisiate 'Aloveita 'Akolo",
+            "Sunia Fili",
+            "Siosa'ia Ma'ulupekotofa Tuita",
+            "Viliami Veasi'i Veikune",
+            "Tevita Hala Palefau",
+            "Siosa'ia Lausi'i",
+            "Sione Feingatau 'Iloa",
+            "Havea Hikule'o 'oPulotu",
+            "Samiu Vaipulu",
+            "Nikotimasi Fatafehi Laufilitonga Kakau Vaha'i"])
 }
 
 (function(){
-    nameList = ["Feleti Vaka'uta Sevele",
-    "Siale 'Ataongo Kaho",
-    "Samiuela 'Akilisi P\u014Diva",
-    "Sonatane Tu'akinamolahi Taumopeau Tupou",
-    "Clive Edwards",
-    "Malakai Fakatoufifita",
-    "Viliami Ta'u Tangi",
-    "'Etuate Lavulavu",
-    "Tu'ipelehake Viliami Tupoulahi Mailefihi Tuku'aho",
-    "Baron Fielakepa of Havelu",
-    "'Isileli Pulu",
-    "Afu'alo Matoto",
-    "Paul Karalus",
-    "Sione Laumanu'uli Luani",
-    "Sione Teisina Fuko",
-    "'Uliti Uata",
-    "Fineasi Funaki",
-    "Lisiate 'Aloveita 'Akolo",
-    "Sunia Fili",
-    "Siosa'ia Ma'ulupekotofa Tuita",
-    "Viliami Veasi'i Veikune",
-    "Tevita Hala Palefau",
-    "Siosa'ia Lausi'i",
-    "Sione Feingatau 'Iloa",
-    "Havea Hikule'o 'oPulotu",
-    "Samiu Vaipulu",
-    "Nikotimasi Fatafehi Laufilitonga Kakau Vaha'i"]
-    nameDelegates(genDelegateList(5));
-    countSpeakers();
-    motionMaker();
+    nameDelegates(genDelegateList(15));
+    buttonfunctions();
 })();
-
-
