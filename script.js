@@ -10,8 +10,8 @@ function genDelegateList(num){
     const names = []
     for (var i = 0; i < num; i++)
     {
-        const emotion = emotions[Math.round(emotions.length * Math.random())]
-        const fruit = fruits[Math.round(fruits.length * Math.random())]
+        const emotion = emotions[Math.round((emotions.length - 1) * Math.random())]
+        const fruit = fruits[Math.round((fruits.length - 1) * Math.random())]
         names.push(emotion + " " + fruit)
     }
     return names;
@@ -197,13 +197,63 @@ function genSpeakersList(minutes, speakingTime){
         document.getElementById("speakerList").remove()
     }
 
-    seconds = minutes * 60
-    speakers = Math.round(seconds / speakingTime)
+    const seconds = minutes * 60;
+    const speakers = Math.round(seconds / speakingTime);
 
     const speakerList = document.createElement("div");
-    speakerList.id = "speakerList"
+    speakerList.id = "speakerList";
 
     for(var i = 0; i < speakers; i++){
+        const speakerNum = document.createElement("span");
+        speakerNum.classList.add("input-group-text");
+        speakerNum.classList.add("col-1");
+        speakerNum.style = "justify-content: center;";
+        
+        const speakerNumText = document.createTextNode("Speaker " + (i + 1));
+        speakerNum.appendChild(speakerNumText);
+
+        const name = document.createElement("select");
+        name.classList.add("delegateName");
+        name.classList.add("form-select");
+        //name.classList.add("col-8");
+
+        const noDelegate = document.createElement("option");
+        noDelegate.value = "noDelegate";
+        noDelegate.innerText= "No Delegates";
+    
+        name.appendChild(noDelegate);
+
+        const done = document.createElement("input");
+        done.type = "button";
+        done.value = "Add to List";
+        done.classList.add("btn");
+        done.classList.add("btn-primary");
+        done.classList.add("col-1");
+
+        const speaker = document.createElement("div");
+        speaker.id = ("speaker_" + (i + 1))
+        speaker.classList.add("input-group");
+        //speaker.classList.add("row");
+
+        speaker.appendChild(speakerNum);
+        speaker.appendChild(name);
+        speaker.appendChild(done);
+
+        speakerList.appendChild(speaker);
+    }
+    speakersdiv = document.getElementById("speakers");
+    speakersdiv.appendChild(speakerList);
+}
+
+function genForAgainstList(speakers, speakingTime){
+    if (document.getElementById("speakerList")){
+        document.getElementById("speakerList").remove()
+    } 
+
+    const speakerList = document.createElement("div");
+    speakerList.id = "speakerList";
+
+    for(var i = 0; i < (speakers * 2); i++){
         const speaker = document.createElement("div");
 
         const name = document.createElement("select");
@@ -229,6 +279,22 @@ function genSpeakersList(minutes, speakingTime){
     speakersdiv = document.getElementById("speakers");
     speakersdiv.appendChild(speakerList);
 }
+
+function addMotion(text){
+    const mods = document.getElementById("mods");
+    const mod = document.createElement("div");
+    const p = document.createElement("p");
+    const word = document.createTextNode(text);
+
+    p.appendChild(word);
+    mod.appendChild(p);
+    mods.appendChild(mod);
+}
+
+document.getElementById("addMotion").addEventListener("click", function(){
+    motion = document.getElementById("motionChosen");
+    addMotion(motion.value);
+})
 
 //finds the list of all delegates marked as present
 function getDelegates(){
@@ -285,6 +351,7 @@ function buttonfunctions(){
         minutesInput = parseFloat(document.getElementById("minutes").value);
         timeInput = parseFloat(document.getElementById("speakingTime").value);
         genSpeakersList(minutesInput,timeInput);
+        updateDelegates();
     })
 
     document.getElementById("refreshspeakers").addEventListener("click", function(){
@@ -306,17 +373,20 @@ function buttonfunctions(){
         }
         if (motion == "mod"){
             const minutes = document.createElement("input")
-            minutes.class = "minutes";
+            minutes.id = "modMinutes";
             minutes.type = "text";
+            minutes.class = "form-control";
             minutes.placeholder = "Minutes";
     
             const speakingTime = document.createElement("input")
-            speakingTime.class = "speakingTime";
+            speakingTime.id = "modTime";
             speakingTime.type = "text";
+            speakingTime.class = "form-control";
             speakingTime.placeholder = "Speaking Time";
     
             const topic = document.createElement("input")
-            topic.class = "topic";
+            topic.id = "modTopic";
+            topic.class = "form-control";
             topic.type = "text";
             topic.placeholder = "Topic";
     
@@ -326,11 +396,28 @@ function buttonfunctions(){
         }
         else if (motion == "unmod"){
             const minutes = document.createElement("input")
-            minutes.id = "minutes";
+            minutes.id = "unmodMinutes";
+            minutes.class = "form-control"
             minutes.type = "text";
             minutes.placeholder = "Minutes";
     
             modifications.appendChild(minutes);
+        }
+        else if (motion == "voting"){
+            const speakers = document.createElement("input")
+            speakers.id = "votingSpeakers";
+            speakers.type = "text";
+            speakers.class = "form-control";
+            speakers.placeholder = "Speakers For/Against";
+
+            const speakingTime = document.createElement("input")
+            speakingTime.id = "modTime";
+            speakingTime.type = "text";
+            speakingTime.class = "form-control";
+            speakingTime.placeholder = "Speaking Time";
+
+            modifications.appendChild(speakers);
+            modifications.appendChild(speakingTime)
         }
     })
 }

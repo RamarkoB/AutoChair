@@ -29,16 +29,18 @@
         <select id="motionChosen">
           <option value="mod">Moderated Caucus</option>
           <option value="unmod">Unmoderated Caucus</option>
+          <option value="voting">Enter Voting Procedure</option>
           <option value="other">Other</option>
         </select>
-        <div id="motionMods">
-          <input id="modMinutes" type="text" placeholder="Minutes">
-          <input id="modTime" type="text" placeholder="Speaking Time">
-          <input id="modTopic" type="text" placeholder="Topic">
+        <div class="input-group">
+          <div id="motionMods" class="input-group-text">
+            <input id="modMinutes" type="text" class="form-control" placeholder="Minutes">
+            <input id="modTime" type="text" class="form-control"  placeholder="Speaking Time">
+            <input id="modTopic" type="text" class="form-control" placeholder="Topic">
+          </div>
+          <button id="addMotion" class="btn btn-primary" type="button">Add Motion</button>
         </div>
-        <button id="addMotion" class="btn btn-primary" type="button">Add Motion</button>
       </div>
-      <div id="newmotion"></div>
       <div id="directives"></div> 
       <div id="mods"></div>
       <div id="unmods"></div>
@@ -49,8 +51,8 @@
       <div id="speakerMaker" class="input-group">
         <input id="minutes" type="text" class="form-control" placeholder="Minutes">
         <input id="speakingTime" type="text" class="form-control" placeholder="Speaking Time">
-          <button id="genspeakers" class="btn btn-primary" type="button">Generate List</button>
-          <button id="refreshspeakers" class="btn btn-primary" type="button">Refresh</button>
+        <button id="genspeakers" class="btn btn-primary" type="button">Generate List</button>
+        <button id="refreshspeakers" class="btn btn-primary" type="button">Refresh</button>
         </div>
     </div>
   </div>
