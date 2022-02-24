@@ -280,21 +280,47 @@ function genForAgainstList(speakers, speakingTime){
     speakersdiv.appendChild(speakerList);
 }
 
-function addMotion(text){
-    const mods = document.getElementById("mods");
-    const mod = document.createElement("div");
+function addMotion(motion, arguments){
+    const motiondiv = document.createElement("div");
     const p = document.createElement("p");
-    const word = document.createTextNode(text);
+    motiondiv.appendChild(p);
 
-    p.appendChild(word);
-    mod.appendChild(p);
-    mods.appendChild(mod);
+    var text = motion;
+    for (var i = 0; i < arguments.length; i++){
+        text = text + " " + arguments[i];
+    }
+
+    p.appendChild(document.createTextNode(text));
+    
+    if (motion == "voting"){
+        maindiv = document.getElementById("voting");
+        maindiv.appendChild(motiondiv);
+    }
+    else if (motion == "extend"){
+        maindiv = document.getElementById("voting");
+        maindiv.appendChild(motiondiv);
+    }
+    else if (motion == "unmod"){
+        maindiv = document.getElementById("unmods");
+        maindiv.appendChild(motiondiv);
+    }
+    else if (motion == "strawpoll"){
+        maindiv = document.getElementById("specialMods");
+        maindiv.appendChild(motiondiv);
+    }
+    else if (motion == "roundrobin"){
+        maindiv = document.getElementById("specialMods");
+        maindiv.appendChild(motiondiv);
+    }
+    else if (motion == "mod"){
+        maindiv = document.getElementById("mods");
+        maindiv.appendChild(motiondiv);
+    }
+    else if (motion == "other"){
+        maindiv = document.getElementById("mods");
+        maindiv.appendChild(motiondiv);
+    }
 }
-
-document.getElementById("addMotion").addEventListener("click", function(){
-    motion = document.getElementById("motionChosen");
-    addMotion(motion.value);
-})
 
 //finds the list of all delegates marked as present
 function getDelegates(){
@@ -346,8 +372,6 @@ function updateDelegates(){
 //add functionaility to various interactible elements
 function buttonfunctions(){
     document.getElementById("genspeakers").addEventListener("click", function(){
-        const minutes = document.getElementById("minutes");
-        const speakingTime = document.getElementById("speakingTime");
         minutesInput = parseFloat(document.getElementById("minutes").value);
         timeInput = parseFloat(document.getElementById("speakingTime").value);
         genSpeakersList(minutesInput,timeInput);
@@ -356,7 +380,7 @@ function buttonfunctions(){
 
     document.getElementById("refreshspeakers").addEventListener("click", function(){
         const minutes = document.getElementById("minutes");
-    const speakingTime = document.getElementById("speakingTime");
+        const speakingTime = document.getElementById("speakingTime");
         minutes.value = null;
         speakingTime.value = null;
         speakerList = document.getElementById("speakerList")
@@ -371,8 +395,56 @@ function buttonfunctions(){
         while (modifications.lastChild) {
             modifications.removeChild(modifications.lastChild);
         }
-        if (motion == "mod"){
+
+        if (motion == "voting"){
+            document.getElementById("motionName").innerText = "Enter Voting Procedure";
+            document.getElementById("motionMods").classList.add("input-group-text");
+
+            const speakers = document.createElement("input")
+            speakers.id = "votingSpeakers";
+            speakers.type = "text";
+            speakers.class = "form-control";
+            speakers.placeholder = "Speakers For/Against";
+
+            const speakingTime = document.createElement("input")
+            speakingTime.id = "modTime";
+            speakingTime.type = "text";
+            speakingTime.class = "form-control";
+            speakingTime.placeholder = "Speaking Time";
+
+            modifications.appendChild(speakers);
+            modifications.appendChild(speakingTime)
+        }
+        else if (motion == "extend"){
+            document.getElementById("motionName").innerText = "Extend Previous Moderated Caucus";
+            document.getElementById("motionMods").classList.remove("input-group-text");
+        }
+        else if (motion == "unmod"){
+            document.getElementById("motionName").innerText = "Unmoderated Caucus";
+            document.getElementById("motionMods").classList.add("input-group-text");
+
             const minutes = document.createElement("input")
+            minutes.id = "unmodMinutes";
+            minutes.class = "form-control"
+            minutes.type = "text";
+            minutes.placeholder = "Minutes";
+    
+            modifications.appendChild(minutes);
+        }
+        else if (motion == "strawpoll"){
+            document.getElementById("motionName").innerText = "Straw Poll";
+            document.getElementById("motionMods").classList.remove("input-group-text");
+        }
+        else if (motion == "roundrobin"){
+            document.getElementById("motionName").innerText = "Round Robin";
+            document.getElementById("motionMods").classList.remove("input-group-text");
+        }
+        else if (motion == "mod"){
+            document.getElementById("motionName").innerText = "Moderated Caucus";
+            document.getElementById("motionMods").classList.add("input-group-text");
+
+            const minutes = document.createElement("input")
+            minutes.innerHTML = "id"
             minutes.id = "modMinutes";
             minutes.type = "text";
             minutes.class = "form-control";
@@ -394,31 +466,30 @@ function buttonfunctions(){
             modifications.appendChild(speakingTime);
             modifications.appendChild(topic);
         }
-        else if (motion == "unmod"){
-            const minutes = document.createElement("input")
-            minutes.id = "unmodMinutes";
-            minutes.class = "form-control"
-            minutes.type = "text";
-            minutes.placeholder = "Minutes";
+        else if (motion == "other"){
+            document.getElementById("motionName").innerText = "Other";
+            document.getElementById("motionMods").classList.add("input-group-text");
+
+            const desc = document.createElement("input")
+            desc.id = "desc";
+            desc.class = "form-control"
+            desc.type = "text";
+            desc.placeholder = "Description";
     
-            modifications.appendChild(minutes);
+            modifications.appendChild(desc);
         }
-        else if (motion == "voting"){
-            const speakers = document.createElement("input")
-            speakers.id = "votingSpeakers";
-            speakers.type = "text";
-            speakers.class = "form-control";
-            speakers.placeholder = "Speakers For/Against";
+    })
 
-            const speakingTime = document.createElement("input")
-            speakingTime.id = "modTime";
-            speakingTime.type = "text";
-            speakingTime.class = "form-control";
-            speakingTime.placeholder = "Speaking Time";
-
-            modifications.appendChild(speakers);
-            modifications.appendChild(speakingTime)
+    document.getElementById("addMotion").addEventListener("click", function(){
+        const motion = document.getElementById("motionChosen");
+        const arguments = [];
+        const motionMods = document.getElementById("motionMods").children;
+        if (motionMods.length > 0){
+            for (var i = 0; i < motionMods.length; i++){
+                arguments.push(motionMods[i].value);
+            }
         }
+        addMotion(motion.value, arguments);
     })
 }
 

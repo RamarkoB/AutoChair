@@ -23,27 +23,33 @@
   <div class="tab-pane fade" id="pills-motions" role="tabpanel" aria-labelledby="pills-motions-tab">
     <div id="motions">
       <div id="motionMaker">
-        <select id="motionDelegate" class="delegateName">
-          <option value="noDelegate">No Delegates</option>
-        </select>
-        <select id="motionChosen">
-          <option value="mod">Moderated Caucus</option>
-          <option value="unmod">Unmoderated Caucus</option>
-          <option value="voting">Enter Voting Procedure</option>
-          <option value="other">Other</option>
-        </select>
+        <div id="motionNameChosen" class="input-group">
+          <select id="motionDelegate" class="delegateName form-select">
+            <option value="noDelegate">No Delegates</option>
+          </select>
+          <select id="motionChosen" class="form-select">
+            <option value="voting">Enter Voting Procedure</option>
+            <option value="extend">Extend Previous Moderated Caucus</option>
+            <option value="unmod">Unmoderated Caucus</option>
+            <option value="strawpoll">Straw Poll</option>
+            <option value="roundrobin">Round Robin</option>
+            <option value="mod">Moderated Caucus</option>      
+            <option value="other">Other</option>
+          </select>
+        </div>
         <div class="input-group">
+          <span class="input-group-text" id="motionName">Enter Voting Procedure</span>
           <div id="motionMods" class="input-group-text">
-            <input id="modMinutes" type="text" class="form-control" placeholder="Minutes">
-            <input id="modTime" type="text" class="form-control"  placeholder="Speaking Time">
-            <input id="modTopic" type="text" class="form-control" placeholder="Topic">
+            <input id="votingSpeakers" type="text" placeholder="Speakers For/Against">
+            <input id="modTime" type="text" placeholder="Speaking Time">
           </div>
           <button id="addMotion" class="btn btn-primary" type="button">Add Motion</button>
         </div>
       </div>
-      <div id="directives"></div> 
-      <div id="mods"></div>
+      <div id="voting"></div>
       <div id="unmods"></div>
+      <div id="specialMods"></div>
+      <div id="mods"></div>
     </div>
   </div>
   <div class="tab-pane fade" id="pills-speakers" role="tabpanel" aria-labelledby="pills-speakers-tab">
