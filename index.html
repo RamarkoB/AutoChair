@@ -82,7 +82,8 @@
       <select id="motionDelegate" class="delegateName form-select">
         <option value="noDelegate">No Delegates</option>
       </select>
-      <select id="motionChosen" class="form-select" >
+      <select id="motionChosen" class="form-select">
+        <option value="chooseMotion">Choose Motion</option>
         <option value="voting">Enter Voting Procedure</option>
         <option value="extend">Extend Previous Moderated Caucus</option>
         <option value="unmod">Unmoderated Caucus</option>
@@ -97,22 +98,31 @@
   
   <div class="gap" style="height: 50px;"></div>
 
-  <div id="speaker_1" class="input-group"></div>
-    <span class="input-group-text col-1" style="justify-content: center;">Speaker 1</span>
-    <select class="delegateName form-select">
-      <option value="noDelegate">No Delegates</option>
-    </select>
-    <select class="delegateName form-select">
-      <option value="noDelegate">No Delegates</option>
-    </select>
+  <div class="input-group">
+    <span class="input-group-text" id="motionName">Round Robin</span>
+    <div id="motionMods" class=""></div>
+    <button class="btn btn-success" type="button">Pass</button>
+    <button class="btn btn-danger" type="button">Fail</button>
   </div>
-  <div id="speaker_1" class="input-group">
-      <div id="motionMods" class="input-group-text">
+
+  <div class="gap" style="height: 50px;"></div>
+
+    <div class="motion input-group">
+      <span class="input-group-text" id="motionName">Round Robin</span>
+      <button class="btn btn-outline-success" type="button">Pass</button>
+      <button class="btn btn-outline-danger" type="button">Fail</button>
+      <button type="button" class="btn btn-outline-dark">Remove Motion</button>
+    </div>
+  
+  <div class="gap" style="height: 50px;"></div>
+
+  <div id="motionDefine" class="input-group">
+    <span id="motionName" class="input-group-text">Enter Voting Procedure</span>
+    <div id="motionMods" class="input-group-text">
       <input id="votingSpeakers" type="text" placeholder="Speakers For/Against">
       <input id="modTime" type="text" placeholder="Speaking Time">
     </div>
     <button id="addMotion" class="btn btn-primary" type="button">Add Motion</button>
   </div>
 
-  
-</html>
+  </html>
