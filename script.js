@@ -311,11 +311,12 @@ function genForAgainstList(speakers){
 //generates a new motion from a
 function addMotion(){
     const motion = document.getElementById("motionChosen").value;
-    const arguments = [];
+    const arguments = {};
+    const modDivs = [];
     const motionMods = document.getElementById("motionMods").children;
     if (motionMods.length > 0){
         for (var i = 0; i < motionMods.length; i++){
-            arguments.push(motionMods[i].value);
+            arguments[motionMods[i].placeholder] = motionMods[i].value;
         }
     }
     
@@ -325,6 +326,8 @@ function addMotion(){
 
     const motionName = document.createElement("span");
     motionName.classList.add("input-group-text");
+    motionName.classList.add("col-3");
+    //motionName.style = "justify-content: center;";
 
     var text;
     
@@ -347,6 +350,11 @@ function addMotion(){
     else if (motion == "unmod"){
         text = "Unmoderated Caucus";
 
+        const minutes = document.createElement("span");
+        minutes.innerText = arguments["Minutes"] + " Minutes";
+        minutes.classList.add("input-group-text");
+        modDivs.push(minutes);
+
         maindiv = document.getElementById("unmods");
     }
     else if (motion == "strawpoll"){
@@ -361,19 +369,32 @@ function addMotion(){
         }
     }
     else if (motion == "roundrobin"){
-
         if (document.getElementById("roundrobinMotion")){
             return;
         }
         else {
             motiondiv.id = "roundrobinMotion"
             text = "Round Robin";
-    
             maindiv = document.getElementById("specialMods");
         }
     }
     else if (motion == "mod"){
         text = "Moderated Caucus";
+
+        const minutes = document.createElement("span");
+        minutes.innerText = arguments["Minutes"] + " Minutes";
+        minutes.classList.add("input-group-text");
+        modDivs.push(minutes);
+
+        const speakingTime = document.createElement("span");
+        speakingTime.innerText = arguments["Speaking Time"] + " Seconds";
+        speakingTime.classList.add("input-group-text");
+        modDivs.push(speakingTime);
+
+        const topic = document.createElement("span");
+        topic.innerText = arguments["Topic"];
+        topic.classList.add("input-group-text");
+        modDivs.push(topic);
 
         maindiv = document.getElementById("mods");
     }
@@ -383,23 +404,29 @@ function addMotion(){
         maindiv = document.getElementById("other");
     }
 
-    for (var i = 0; i < arguments.length; i++){
-        text = text + " " + arguments[i];
-    }
-
-    motionName.innerText = text;
-
     const pass = document.createElement("button");
     pass.classList.add("btn-outline-success");
     pass.classList.add("btn");
     pass.type = "button";
     pass.innerText = "Pass";
+    pass.addEventListener("click", function(){
+        fail.classList.add("btn-outline-danger");
+        fail.classList.remove("btn-danger");
+        pass.classList.remove("btn-outline-success");
+        pass.classList.add("btn-success");
+    })
 
     const fail = document.createElement("button");
     fail.classList.add("btn-outline-danger");
     fail.classList.add("btn");
     fail.type = "button";
     fail.innerText = "Fail";
+    fail.addEventListener("click", function(){
+        pass.classList.remove("btn-success");
+        pass.classList.add("btn-outline-success");
+        fail.classList.remove("btn-outline-danger");
+        fail.classList.add("btn-danger");
+    })
 
     const remove = document.createElement("button");
     remove.classList.add("btn-outline-dark");
@@ -410,10 +437,24 @@ function addMotion(){
         event.target.parentElement.remove();
     })
 
-    motiondiv.append(motionName);
-    motiondiv.append(pass);
-    motiondiv.append(fail);
-    motiondiv.append(remove);
+    motionName.innerText = text;
+    motiondiv.appendChild(motionName);
+    
+    /* for (var i = 0; i < arguments.length; i++){
+        console.log(arguments[i]);
+        var arguement = document.createElement("span");
+        arguement.innerText = arguments[i];
+        arguement.classList.add("input-group-text");
+        motiondiv.appendChild(arguement);
+    } */
+
+    for (var i = 0; i < modDivs.length; i++){
+        motiondiv.appendChild(modDivs[i]);
+    }
+
+    motiondiv.appendChild(pass);
+    motiondiv.appendChild(fail);
+    motiondiv.appendChild(remove);
 
     maindiv.appendChild(motiondiv);
 }
@@ -520,7 +561,7 @@ function buttonfunctions(){
                 const motionDefine = document.createElement("div");
                 motionDefine.id = "motionDefine";
                 motionDefine.classList.add("input-group");
-                motionDefine.style = "justify-content: center;";
+                motionDefine.style = "justify-content: center; padding: 20px 10px;";
 
                 motionDefine.appendChild(span);
                 motionDefine.appendChild(motionMods);
