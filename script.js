@@ -8,7 +8,7 @@ function genDelegateList(num){
                     "Watermelon", "Lemon", "Lime", "Peach", "Kiwi", "Plum", "Cherry", 
                     "Strawberry", "Blueberry"]
     const names = []
-    for (var i = 0; i < num; i++)
+    for (let i = 0; i < num; i++)
     {
         const emotion = emotions[Math.round((emotions.length - 1) * Math.random())]
         const fruit = fruits[Math.round((fruits.length - 1) * Math.random())]
@@ -27,7 +27,7 @@ function nameDelegates(nameList){
 
     //finds number of delegates and iterates through them
     listSize = nameList.length
-    for (var i = 0; i < listSize; i++){
+    for (let i = 0; i < listSize; i++){
         //gets current name from the name list and creates div
         const name = nameList[i];
 
@@ -189,6 +189,13 @@ function countDelegates(presentCount){
     }
 }
 
+function calcSpeakers(minutes, speakingTime){
+    const seconds = minutes * 60;
+    const speakers = Math.round(seconds / speakingTime);
+
+    return speakers;
+}
+
 //input: the total number of minute the unmod lasts
 //input: the speaking time for each speech
 //output: produces a speaker's list on the speakers tab
@@ -197,13 +204,12 @@ function genSpeakersList(minutes, speakingTime){
         document.getElementById("speakerList").remove()
     }
 
-    const seconds = minutes * 60;
-    const speakers = Math.round(seconds / speakingTime);
+    speakers = calcSpeakers(minutes, speakingTime);
 
     const speakerList = document.createElement("div");
     speakerList.id = "speakerList";
 
-    for(var i = 0; i < speakers; i++){
+    for(let i = 0; i < speakers; i++){
         const speakerNum = document.createElement("span");
         speakerNum.classList.add("input-group-text");
         speakerNum.classList.add("col-1");
@@ -254,13 +260,13 @@ function genForAgainstList(speakers){
     const speakerList = document.createElement("div");
     speakerList.id = "speakerList";
 
-    for(var i = 0; i < (speakers * 2); i++){
+    for(let i = 0; i < (speakers * 2); i++){
         const speakerNum = document.createElement("span");
         speakerNum.classList.add("input-group-text");
         speakerNum.classList.add("col-2");
         speakerNum.style = "justify-content: center;";
         
-        var speakerNumText;
+        let speakerNumText;
         if (i % 2 == 0){
             speakerNumText = document.createTextNode("Speaker For " + ((i / 2) + 1));
         }
@@ -308,28 +314,82 @@ function genForAgainstList(speakers){
     speakersdiv.appendChild(speakerList);
 }
 
+//generates a voting div
+function createVote(text, mods){
+    const div = document.createElement("div");
+    div.classList.add("motion");
+    div.classList.add("input-group");
+
+    const name = document.createElement("span");
+    name.classList.add("input-group-text");
+    name.classList.add("col-3");
+    name.innerText = text;
+    div.appendChild(name);
+
+    if (mods)
+    {
+        for (let i = 0; i < mods.length; i++){
+            const modDiv = document.createElement("span");
+            modDiv.innerText = mods[i];
+            modDiv.classList.add("input-group-text");
+    
+            div.appendChild(modDiv);
+        }
+    }
+
+    const pass = document.createElement("button");
+    pass.classList.add("btn-outline-success");
+    pass.classList.add("btn");
+    pass.type = "button";
+    pass.innerText = "Pass";
+    pass.addEventListener("click", function(){
+        fail.classList.add("btn-outline-danger");
+        fail.classList.remove("btn-danger");
+        pass.classList.remove("btn-outline-success");
+        pass.classList.add("btn-success");
+    })
+    div.appendChild(pass);
+
+    const fail = document.createElement("button");
+    fail.classList.add("btn-outline-danger");
+    fail.classList.add("btn");
+    fail.type = "button";
+    fail.innerText = "Fail";
+    fail.addEventListener("click", function(){
+        pass.classList.remove("btn-success");
+        pass.classList.add("btn-outline-success");
+        fail.classList.remove("btn-outline-danger");
+        fail.classList.add("btn-danger");
+    })
+    div.appendChild(fail);
+
+    const remove = document.createElement("button");
+    remove.classList.add("btn-outline-dark");
+    remove.classList.add("btn");
+    remove.type = "button";
+    remove.innerText = "Remove";
+    remove.addEventListener("click", function(event){
+        event.target.parentElement.remove();
+    })
+    div.appendChild(remove);    
+
+    return div;
+}
+
 //generates a new motion from arguements
 function addMotion(){
     const motion = document.getElementById("makeMotion").value;
     const arguments = {};
-    const modDivs = [];
+    const mods = [];
     const motionMods = document.getElementById("motionMods").children;
     if (motionMods.length > 0){
-        for (var i = 0; i < motionMods.length; i++){
+        for (let i = 0; i < motionMods.length; i++){
             arguments[motionMods[i].placeholder] = motionMods[i].value;
         }
     }
     
-    const motiondiv = document.createElement("div");
-    motiondiv.classList.add("motion");
-    motiondiv.classList.add("input-group");
-
-    const motionName = document.createElement("span");
-    motionName.classList.add("input-group-text");
-    motionName.classList.add("col-3");
-    //motionName.style = "justify-content: center;";
-
-    var text;
+    let text;
+    let motionid;
     
     if (motion == "voting"){
         text = "Enter Voting Procedure";
@@ -341,7 +401,7 @@ function addMotion(){
             return;
         }
         else {
-            motiondiv.id = "extendMotion"
+            motionid = "extendMotion"
             text = "Extend Previous Moderated Caucus";
 
             maindiv = document.getElementById("voting");
@@ -349,11 +409,7 @@ function addMotion(){
     }
     else if (motion == "unmod"){
         text = "Unmoderated Caucus";
-
-        const minutes = document.createElement("span");
-        minutes.innerText = arguments["Minutes"] + " Minutes";
-        minutes.classList.add("input-group-text");
-        modDivs.push(minutes);
+        mods.push(arguments["Minutes"] + " Minutes");
 
         maindiv = document.getElementById("unmods");
     }
@@ -362,7 +418,7 @@ function addMotion(){
             return;
         }
         else {
-            motiondiv.id = "strawPollMotion"
+            motionid = "strawPollMotion"
             text = "Straw Poll";    
 
             maindiv = document.getElementById("specialMods");
@@ -373,7 +429,7 @@ function addMotion(){
             return;
         }
         else {
-            motiondiv.id = "roundrobinMotion"
+            motionid = "roundrobinMotion"
             text = "Round Robin";
             maindiv = document.getElementById("specialMods");
         }
@@ -381,20 +437,9 @@ function addMotion(){
     else if (motion == "mod"){
         text = "Moderated Caucus";
 
-        const minutes = document.createElement("span");
-        minutes.innerText = arguments["Minutes"] + " Minutes";
-        minutes.classList.add("input-group-text");
-        modDivs.push(minutes);
-
-        const speakingTime = document.createElement("span");
-        speakingTime.innerText = arguments["Speaking Time"] + " Seconds";
-        speakingTime.classList.add("input-group-text");
-        modDivs.push(speakingTime);
-
-        const topic = document.createElement("span");
-        topic.innerText = arguments["Topic"];
-        topic.classList.add("input-group-text");
-        modDivs.push(topic);
+        mods.push(arguments["Minutes"] + " Minutes");
+        mods.push(arguments["Speaking Time"] + " Seconds");
+        mods.push(arguments["Topic"]);
 
         maindiv = document.getElementById("mods");
     }
@@ -404,115 +449,18 @@ function addMotion(){
         maindiv = document.getElementById("other");
     }
 
-    const pass = document.createElement("button");
-    pass.classList.add("btn-outline-success");
-    pass.classList.add("btn");
-    pass.type = "button";
-    pass.innerText = "Pass";
-    pass.addEventListener("click", function(){
-        fail.classList.add("btn-outline-danger");
-        fail.classList.remove("btn-danger");
-        pass.classList.remove("btn-outline-success");
-        pass.classList.add("btn-success");
-    })
-
-    const fail = document.createElement("button");
-    fail.classList.add("btn-outline-danger");
-    fail.classList.add("btn");
-    fail.type = "button";
-    fail.innerText = "Fail";
-    fail.addEventListener("click", function(){
-        pass.classList.remove("btn-success");
-        pass.classList.add("btn-outline-success");
-        fail.classList.remove("btn-outline-danger");
-        fail.classList.add("btn-danger");
-    })
-
-    const remove = document.createElement("button");
-    remove.classList.add("btn-outline-dark");
-    remove.classList.add("btn");
-    remove.type = "button";
-    remove.innerText = "Remove";
-    remove.addEventListener("click", function(event){
-        event.target.parentElement.remove();
-    })
-
-    motionName.innerText = text;
-    motiondiv.appendChild(motionName);
-    
-    /* for (var i = 0; i < arguments.length; i++){
-        console.log(arguments[i]);
-        var arguement = document.createElement("span");
-        arguement.innerText = arguments[i];
-        arguement.classList.add("input-group-text");
-        motiondiv.appendChild(arguement);
-    } */
-
-    for (var i = 0; i < modDivs.length; i++){
-        motiondiv.appendChild(modDivs[i]);
+    const motiondiv = createVote(text, mods);
+    if (motionid) {
+        motiondiv.id = motionid;
     }
-
-    motiondiv.appendChild(pass);
-    motiondiv.appendChild(fail);
-    motiondiv.appendChild(remove);
-
     maindiv.appendChild(motiondiv);
 }
 
 //generates a new directive from arguements
 function addDir(){
     const dirName = document.getElementById("dirName").value;
-
     document.getElementById("dirName").value = "";
-
-    const dirdiv = document.createElement("div");
-    dirdiv.classList.add("motion");
-    dirdiv.classList.add("input-group");
-
-    const motionName = document.createElement("span");
-    motionName.classList.add("input-group-text");
-    motionName.classList.add("col-3");
-
-    const pass = document.createElement("button");
-    pass.classList.add("btn-outline-success");
-    pass.classList.add("btn");
-    pass.type = "button";
-    pass.innerText = "Pass";
-    pass.addEventListener("click", function(){
-        fail.classList.add("btn-outline-danger");
-        fail.classList.remove("btn-danger");
-        pass.classList.remove("btn-outline-success");
-        pass.classList.add("btn-success");
-    })
-
-    const fail = document.createElement("button");
-    fail.classList.add("btn-outline-danger");
-    fail.classList.add("btn");
-    fail.type = "button";
-    fail.innerText = "Fail";
-    fail.addEventListener("click", function(){
-        pass.classList.remove("btn-success");
-        pass.classList.add("btn-outline-success");
-        fail.classList.remove("btn-outline-danger");
-        fail.classList.add("btn-danger");
-    })
-
-    const remove = document.createElement("button");
-    remove.classList.add("btn-outline-dark");
-    remove.classList.add("btn");
-    remove.type = "button";
-    remove.innerText = "Remove";
-    remove.addEventListener("click", function(event){
-        event.target.parentElement.remove();
-    })
-
-    motionName.innerText = dirName;
-    
-
-    dirdiv.appendChild(motionName);
-    dirdiv.appendChild(pass);
-    dirdiv.appendChild(fail);
-    dirdiv.appendChild(remove);
+    const dirdiv = createVote(dirName);
 
     maindiv = document.getElementById("directiveslist");
     maindiv.appendChild(dirdiv);
@@ -525,7 +473,7 @@ function getDelegates(){
 
     //for element in list, grabs name and adds to list
     const presentNames = [];
-    for (var i = 0; i < presentList.length; i++)
+    for (let i = 0; i < presentList.length; i++)
     {
         presentNames.push(presentList[i].innerText);
     }
@@ -538,7 +486,7 @@ function updateDelegates(){
     countDelegates(delList.length);
 
     const delegateNames = document.getElementsByClassName("delegateName");
-    for (var i = 0; i < delegateNames.length; i++)
+    for (let i = 0; i < delegateNames.length; i++)
     {
         const delegates = delegateNames[i];
         while (delegates.lastChild) {
@@ -558,7 +506,7 @@ function updateDelegates(){
             chooseDelegate.innerText = "Choose Delegate";
             delegateNames[i].appendChild(chooseDelegate);
 
-            for (var j = 0; j < delList.length; j++){
+            for (let j = 0; j < delList.length; j++){
                 const delegate = document.createElement("option");
                 const name = delList[j];
                 delegate.value = name.replace(" ","_");
