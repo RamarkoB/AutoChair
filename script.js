@@ -308,9 +308,9 @@ function genForAgainstList(speakers){
     speakersdiv.appendChild(speakerList);
 }
 
-//generates a new motion from a
+//generates a new motion from arguements
 function addMotion(){
-    const motion = document.getElementById("motionChosen").value;
+    const motion = document.getElementById("makeMotion").value;
     const arguments = {};
     const modDivs = [];
     const motionMods = document.getElementById("motionMods").children;
@@ -459,6 +459,65 @@ function addMotion(){
     maindiv.appendChild(motiondiv);
 }
 
+//generates a new directive from arguements
+function addDir(){
+    const dirName = document.getElementById("dirName").value;
+
+    document.getElementById("dirName").value = "";
+
+    const dirdiv = document.createElement("div");
+    dirdiv.classList.add("motion");
+    dirdiv.classList.add("input-group");
+
+    const motionName = document.createElement("span");
+    motionName.classList.add("input-group-text");
+    motionName.classList.add("col-3");
+
+    const pass = document.createElement("button");
+    pass.classList.add("btn-outline-success");
+    pass.classList.add("btn");
+    pass.type = "button";
+    pass.innerText = "Pass";
+    pass.addEventListener("click", function(){
+        fail.classList.add("btn-outline-danger");
+        fail.classList.remove("btn-danger");
+        pass.classList.remove("btn-outline-success");
+        pass.classList.add("btn-success");
+    })
+
+    const fail = document.createElement("button");
+    fail.classList.add("btn-outline-danger");
+    fail.classList.add("btn");
+    fail.type = "button";
+    fail.innerText = "Fail";
+    fail.addEventListener("click", function(){
+        pass.classList.remove("btn-success");
+        pass.classList.add("btn-outline-success");
+        fail.classList.remove("btn-outline-danger");
+        fail.classList.add("btn-danger");
+    })
+
+    const remove = document.createElement("button");
+    remove.classList.add("btn-outline-dark");
+    remove.classList.add("btn");
+    remove.type = "button";
+    remove.innerText = "Remove";
+    remove.addEventListener("click", function(event){
+        event.target.parentElement.remove();
+    })
+
+    motionName.innerText = dirName;
+    
+
+    dirdiv.appendChild(motionName);
+    dirdiv.appendChild(pass);
+    dirdiv.appendChild(fail);
+    dirdiv.appendChild(remove);
+
+    maindiv = document.getElementById("directiveslist");
+    maindiv.appendChild(dirdiv);
+}
+
 //finds the list of all delegates marked as present
 function getDelegates(){
     //gets list of all elements with class "present"
@@ -513,6 +572,7 @@ function updateDelegates(){
 
 //add functionaility to various interactible elements
 function buttonfunctions(){
+    //Generate a Speaker's List for a moderated caucus
     document.getElementById("genspeakers").addEventListener("click", function(){
         minutesInput = parseFloat(document.getElementById("minutes").value);
         timeInput = parseFloat(document.getElementById("speakingTime").value);
@@ -520,6 +580,7 @@ function buttonfunctions(){
         updateDelegates();
     })
 
+    //Refresh Speakers Globally
     document.getElementById("refreshspeakers").addEventListener("click", function(){
         const minutes = document.getElementById("minutes");
         const speakingTime = document.getElementById("speakingTime");
@@ -531,7 +592,8 @@ function buttonfunctions(){
         }
     });
 
-    document.getElementById("motionChosen").addEventListener("change", function(event){
+    //Make a New Motion Div
+    document.getElementById("makeMotion").addEventListener("change", function(event){
         const motion = event.target.value
 
         if (motion == "choose"){
@@ -660,6 +722,9 @@ function buttonfunctions(){
             }
         }        
     })
+
+    //Make a New Directive Div
+    document.getElementById("makeDir").addEventListener("click", addDir)
 }
 
 //contains the list of all tongan names
