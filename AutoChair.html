@@ -32,7 +32,7 @@
               <select id="motionDelegate" class="delegateName form-select">
                 <option value="noDelegate">No Delegates</option>
               </select>
-              <select id="motionChosen" class="form-select">
+              <select id="makeMotion" class="form-select">
                 <option value="choose">Choose Motion</option>
                 <option value="voting">Enter Voting Procedure</option>
                 <option value="extend">Extend Previous Moderated Caucus</option>
@@ -63,9 +63,11 @@
       </div>
       <div class="tab-pane fade" id="pills-directives" role="tabpanel" aria-labelledby="pills-directives-tab">
         <div id="directives">
-          <div id="dirDefine" class="input-group" style="justify-content: center; padding: 20px 10px;">
+          <div id="dirMaker" class="input-group" style="justify-content: center; padding: 20px 10px;">
             <input id="dirName" class="input-group-text" type="text" placeholder="Directive Name">
-            <button id="addDir" class="btn btn-primary" type="button">Add Directive</button>
+            <button id="makeDir" class="btn btn-primary" type="button">Add Directive</button>
+          </div>
+          <div id="directiveslist"></div>
         </div>
       </div>
     </div>
