@@ -1,4 +1,4 @@
-//input: number of delegates desired
+//input: Number of delegates desired
 //output: list of delegates of length num
 function genDelegateList(num){
     const emotions = ["Happy", "Sad", "Excited", "Scared", "Angry", "Shy", "Silly", 
@@ -25,7 +25,7 @@ function nameDelegates(nameList){
     delList.id = "delegatelist";
     delList.classList.add("col-6")
 
-    //finds number of delegates and iterates through them
+    //finds Number of delegates and iterates through them
     listSize = nameList.length
     for (let i = 0; i < listSize; i++){
         //gets current name from the name list and creates div
@@ -146,7 +146,7 @@ function nameDelegates(nameList){
     delegatesDiv.appendChild(delList);
 }
 
-//input: number of present delegates
+//input: Number of present delegates
 //output: calculated majorities on delegates tab
 function countDelegates(presentCount){
     const counttext = "There are " + presentCount + " Delegates";
@@ -189,22 +189,32 @@ function countDelegates(presentCount){
     }
 }
 
+//input: minutes, speaking time
+//output: total Number of speakers
 function calcSpeakers(minutes, speakingTime){
     const seconds = minutes * 60;
-    const speakers = Math.round(seconds / speakingTime);
-
-    return speakers;
+    
+    if (seconds % speakingTime == 0){
+        return speakers = Math.round(seconds / speakingTime);
+    }
+    else {
+        return 0;
+    }   
 }
 
-//input: the total number of minute the unmod lasts
+//input: the total Number of minute the unmod lasts
 //input: the speaking time for each speech
-//output: produces a speaker's list on the speakers tab
+//output: speaker's list on the speakers tab
 function genSpeakersList(minutes, speakingTime){
     if (document.getElementById("speakerList")){
         document.getElementById("speakerList").remove()
     }
 
-    speakers = calcSpeakers(minutes, speakingTime);
+    let speakers = calcSpeakers(minutes, speakingTime);
+    if (speakers == 0){
+        raiseModal();
+        return;
+    }
 
     const speakerList = document.createElement("div");
     speakerList.id = "speakerList";
@@ -251,7 +261,8 @@ function genSpeakersList(minutes, speakingTime){
     speakersdiv.appendChild(speakerList);
 }
 
-//generates a list of For and Against speakers 
+//input: Number of speakers
+//output: list of for and against speakers on speakers tab
 function genForAgainstList(speakers){
     if (document.getElementById("speakerList")){
         document.getElementById("speakerList").remove()
@@ -314,7 +325,13 @@ function genForAgainstList(speakers){
     speakersdiv.appendChild(speakerList);
 }
 
-//generates a voting div
+//raise a modal
+function raiseModal(){
+    console.log("nah, it isn't divisiible");
+}
+
+//input: Name of vote, vote modifications
+//output: a voting div
 function createVote(text, mods){
     const div = document.createElement("div");
     div.classList.add("motion");
@@ -376,7 +393,67 @@ function createVote(text, mods){
     return div;
 }
 
-//generates a new motion from arguements
+//Inserts mods in most to least disruptive order
+function insertMod(div){
+    const speakers = Number(div.dataset.speakers);
+
+    if (speakers == 0){
+        raiseModal();
+        return;
+    }
+
+    const mods = document.getElementById("mods").children;
+    if (mods[0]){
+        for (let i = 0; i < mods.length; i++)
+        {
+            if (speakers > Number(mods[i].dataset.speakers))
+            {
+                console.log(speakers, ">", mods[i].dataset.speakers);
+                mods[i].before(div);
+                return;
+            }
+            else {
+                console.log(speakers, "<", mods[i].dataset.speakers);
+            }
+        }
+
+        document.getElementById("mods").appendChild(div);
+        return;
+    }
+    else {
+        document.getElementById("mods").appendChild(div);
+    }
+}
+
+//inserts unmods in most to least disruptive order
+function insertUnmod(div){
+    const minutes = Number(div.dataset.minutes);
+
+    const unmods = document.getElementById("unmods").children;
+    if (unmods[0]){
+        for (let i = 0; i < unmods.length; i++)
+        {
+            if (minutes > Number(unmods[i].dataset.minutes))
+            {
+                console.log(minutes, ">", unmods[i].dataset.minutes);
+                unmods[i].before(div);
+                return;
+            }
+            else {
+                console.log(minutes, "<", unmods[i].dataset.minutes);
+            }
+        }
+
+        document.getElementById("unmods").appendChild(div);
+        return;
+    }
+    else {
+        console.log("First Unmod!");
+        document.getElementById("unmods").appendChild(div);
+    }
+}
+
+//generates a new motion from motion maker on motions tab
 function addMotion(){
     const motion = document.getElementById("makeMotion").value;
     const arguments = {};
@@ -446,6 +523,8 @@ function addMotion(){
     else if (motion == "other"){
         text = "Other";
 
+        mods.push(arguments["Description"]);
+
         maindiv = document.getElementById("other");
     }
 
@@ -453,10 +532,23 @@ function addMotion(){
     if (motionid) {
         motiondiv.id = motionid;
     }
+    if (motion == "unmod"){
+        motiondiv.dataset.minutes = arguments["Minutes"];
+
+        insertUnmod(motiondiv);
+        return;        
+    }
+    if (motion == "mod"){
+        motiondiv.dataset.speakers = calcSpeakers(arguments["Minutes"], arguments["Speaking Time"]);
+
+        insertMod(motiondiv);
+        return;        
+    }
+
     maindiv.appendChild(motiondiv);
 }
 
-//generates a new directive from arguements
+//generates a new directive from div maker on directives tab
 function addDir(){
     const dirName = document.getElementById("dirName").value;
     document.getElementById("dirName").value = "";
@@ -466,7 +558,7 @@ function addDir(){
     maindiv.appendChild(dirdiv);
 }
 
-//finds the list of all delegates marked as present
+//returns list of all delegates marked as present
 function getDelegates(){
     //gets list of all elements with class "present"
     const presentList = document.getElementsByClassName("present");
@@ -480,7 +572,7 @@ function getDelegates(){
     return(presentNames);
 }
 
-//updates the entire page whenever a delegate is added or removed from attendence
+//updates the entire page whenever a attendence changes
 function updateDelegates(){
     const delList = getDelegates();
     countDelegates(delList.length);
@@ -707,6 +799,7 @@ function tongaNames() {
             "Nikotimasi Fatafehi Laufilitonga Kakau Vaha'i"])
 }
 
+//main function
 (function(){
     nameDelegates(genDelegateList(15));
     buttonfunctions();
