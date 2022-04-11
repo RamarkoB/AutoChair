@@ -1,3 +1,12 @@
+//raise a modal for errors
+function raiseModal(error){
+    if (error == "divisibility"){
+        console.log("nah, it isn't divisiible");
+    }
+    else if (error = "empty")
+    console.log("nah, don't leave any fields blank");
+}
+
 //input: Number of delegates desired
 //output: list of delegates of length num
 function genDelegateList(num){
@@ -212,7 +221,7 @@ function genSpeakersList(minutes, speakingTime){
 
     let speakers = calcSpeakers(minutes, speakingTime);
     if (speakers == 0){
-        raiseModal();
+        raiseModal("divisibility");
         return;
     }
 
@@ -325,11 +334,6 @@ function genForAgainstList(speakers){
     speakersdiv.appendChild(speakerList);
 }
 
-//raise a modal
-function raiseModal(){
-    console.log("nah, it isn't divisiible");
-}
-
 //input: Name of vote, vote modifications
 //output: a voting div
 function createVote(text, mods){
@@ -396,9 +400,10 @@ function createVote(text, mods){
 //Inserts mods in most to least disruptive order
 function insertMod(div){
     const speakers = Number(div.dataset.speakers);
+    const minutes = Number(div.dataset.minutes);
 
     if (speakers == 0){
-        raiseModal();
+        raiseModal("divsibility");
         return;
     }
 
@@ -411,6 +416,15 @@ function insertMod(div){
                 console.log(speakers, ">", mods[i].dataset.speakers);
                 mods[i].before(div);
                 return;
+            }
+            if (speakers == Number(mods[i].dataset.speakers))
+            {
+                if (minutes > Number(mods[i].dataset.minutes))
+                {
+                    console.log(minutes, ">", mods[i].dataset.minutes);
+                    mods[i].before(div);
+                    return;
+                }
             }
             else {
                 console.log(speakers, "<", mods[i].dataset.speakers);
@@ -486,6 +500,12 @@ function addMotion(){
     }
     else if (motion == "unmod"){
         text = "Unmoderated Caucus";
+        
+        if(arguments["Minutes"] == ""){
+            raiseModal("empty");
+            return;
+        }
+
         mods.push(arguments["Minutes"] + " Minutes");
 
         maindiv = document.getElementById("unmods");
@@ -514,6 +534,11 @@ function addMotion(){
     else if (motion == "mod"){
         text = "Moderated Caucus";
 
+        if (arguments["Minutes"] == "" || arguments["Speaking Time"] == ""|| arguments["Topic"] == ""){
+            raiseModal("empty");
+            return;
+        }
+
         mods.push(arguments["Minutes"] + " Minutes");
         mods.push(arguments["Speaking Time"] + " Seconds");
         mods.push(arguments["Topic"]);
@@ -522,6 +547,11 @@ function addMotion(){
     }
     else if (motion == "other"){
         text = "Other";
+
+        if (arguments["Description"] == ""){
+            raiseModal("empty");
+            return;
+        }
 
         mods.push(arguments["Description"]);
 
@@ -540,6 +570,7 @@ function addMotion(){
     }
     if (motion == "mod"){
         motiondiv.dataset.speakers = calcSpeakers(arguments["Minutes"], arguments["Speaking Time"]);
+        motiondiv.dataset.minutes = arguments["Minutes"];
 
         insertMod(motiondiv);
         return;        
