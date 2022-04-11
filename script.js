@@ -1,9 +1,11 @@
 //raise a modal for errors
 function raiseModal(error){
     const errorModal = new bootstrap.Modal(document.getElementById('errorModal'))
+    //error: total minutes is not divisible by number of speakers
     if (error == "divide"){
         document.getElementById("errorText").innerText = "The total time isn't divisible by the number of speakers";
     }
+    //error: fields are empty
     else if (error == "empty"){
         document.getElementById("errorText").innerText = "Don't leave any fields blank";
     }
@@ -277,13 +279,16 @@ function genSpeakersList(minutes, speakingTime){
 //input: Number of speakers
 //output: list of for and against speakers on speakers tab
 function genForAgainstList(speakers){
+    //remove speakers list if one is already open
     if (document.getElementById("speakerList")){
         document.getElementById("speakerList").remove()
     } 
 
+    //create speakers list div
     const speakerList = document.createElement("div");
     speakerList.id = "speakerList";
 
+    //add speakers, alternating between for an against
     for(let i = 0; i < (speakers * 2); i++){
         const speakerNum = document.createElement("span");
         speakerNum.classList.add("input-group-text");
@@ -299,6 +304,7 @@ function genForAgainstList(speakers){
         }
         speakerNum.appendChild(speakerNumText);
 
+        //create individual speaker divs
         const name = document.createElement("select");
         name.classList.add("delegateName");
         name.classList.add("form-select");
@@ -341,16 +347,19 @@ function genForAgainstList(speakers){
 //input: Name of vote, vote modifications
 //output: a voting div
 function createVote(text, mods){
+    //create div for vote
     const div = document.createElement("div");
     div.classList.add("motion");
     div.classList.add("input-group");
 
+    //attach name to vote div
     const name = document.createElement("span");
     name.classList.add("input-group-text");
     name.classList.add("col-3");
     name.innerText = text;
     div.appendChild(name);
 
+    //add any modifications to div
     if (mods)
     {
         for (let i = 0; i < mods.length; i++){
@@ -362,6 +371,7 @@ function createVote(text, mods){
         }
     }
 
+    //pass button
     const pass = document.createElement("button");
     pass.classList.add("btn-outline-success");
     pass.classList.add("btn");
@@ -375,6 +385,7 @@ function createVote(text, mods){
     })
     div.appendChild(pass);
 
+    //fail button
     const fail = document.createElement("button");
     fail.classList.add("btn-outline-danger");
     fail.classList.add("btn");
@@ -388,6 +399,7 @@ function createVote(text, mods){
     })
     div.appendChild(fail);
 
+    //remove button
     const remove = document.createElement("button");
     remove.classList.add("btn-outline-dark");
     remove.classList.add("btn");
@@ -398,26 +410,30 @@ function createVote(text, mods){
     })
     div.appendChild(remove);    
 
+    //return div
     return div;
 }
 
 //Inserts mods in most to least disruptive order
 function insertMod(div){
+    //grab speakers and minutes from motion div
     const speakers = Number(div.dataset.speakers);
     const minutes = Number(div.dataset.minutes);
 
+    //raise error if speakers are not divisible
     if (speakers == 0){
         raiseModal("divide");
         return;
     }
 
+    //check if mods list is empty
     const mods = document.getElementById("mods").children;
     if (mods[0]){
+        //iterate through divs to place in correct order
         for (let i = 0; i < mods.length; i++)
         {
             if (speakers > Number(mods[i].dataset.speakers))
             {
-                console.log(speakers, ">", mods[i].dataset.speakers);
                 mods[i].before(div);
                 return;
             }
@@ -425,19 +441,16 @@ function insertMod(div){
             {
                 if (minutes > Number(mods[i].dataset.minutes))
                 {
-                    console.log(minutes, ">", mods[i].dataset.minutes);
                     mods[i].before(div);
                     return;
                 }
             }
-            else {
-                console.log(speakers, "<", mods[i].dataset.speakers);
-            }
         }
-
+        //place at bottom if least diruptive
         document.getElementById("mods").appendChild(div);
         return;
     }
+    //add first mood if list is empty
     else {
         document.getElementById("mods").appendChild(div);
     }
@@ -445,28 +458,27 @@ function insertMod(div){
 
 //inserts unmods in most to least disruptive order
 function insertUnmod(div){
+    //grab minutes from speaker div
     const minutes = Number(div.dataset.minutes);
 
+    //check if unmods list is empty
     const unmods = document.getElementById("unmods").children;
     if (unmods[0]){
+        //iterate through divs to place in correct order
         for (let i = 0; i < unmods.length; i++)
         {
             if (minutes > Number(unmods[i].dataset.minutes))
             {
-                console.log(minutes, ">", unmods[i].dataset.minutes);
                 unmods[i].before(div);
                 return;
             }
-            else {
-                console.log(minutes, "<", unmods[i].dataset.minutes);
-            }
         }
-
+        //place at bottom if least diruptive
         document.getElementById("unmods").appendChild(div);
         return;
     }
+    //add first mood if list is empty
     else {
-        console.log("First Unmod!");
         document.getElementById("unmods").appendChild(div);
     }
 }
@@ -562,33 +574,39 @@ function addMotion(){
         maindiv = document.getElementById("other");
     }
 
+    //creates motion div
     const motiondiv = createVote(text, mods);
+
+    //adds motion id if applicable
     if (motionid) {
         motiondiv.id = motionid;
     }
+
+    //places in correct order depening on motion type
     if (motion == "unmod"){
         motiondiv.dataset.minutes = arguments["Minutes"];
 
         insertUnmod(motiondiv);
-        return;        
     }
-    if (motion == "mod"){
+    else if (motion == "mod"){
         motiondiv.dataset.speakers = calcSpeakers(arguments["Minutes"], arguments["Speaking Time"]);
         motiondiv.dataset.minutes = arguments["Minutes"];
 
-        insertMod(motiondiv);
-        return;        
+        insertMod(motiondiv);   
     }
-
-    maindiv.appendChild(motiondiv);
+    else {
+        maindiv.appendChild(motiondiv);
+    }
 }
 
 //generates a new directive from div maker on directives tab
 function addDir(){
+    //creates a vote div for the directive
     const dirName = document.getElementById("dirName").value;
     document.getElementById("dirName").value = "";
     const dirdiv = createVote(dirName);
 
+    //places vote in directives tab
     maindiv = document.getElementById("directiveslist");
     maindiv.appendChild(dirdiv);
 }
