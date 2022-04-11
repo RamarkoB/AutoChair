@@ -15,7 +15,7 @@ function raiseModal(error){
 
 //input: Number of delegates desired
 //output: list of delegates of length num
-function genDelegateList(num){
+function genDelegates(num){
     const emotions = ["Happy", "Sad", "Excited", "Scared", "Angry", "Shy", "Silly", 
                     "Bored", "Tired", "Calm", "Dissapointed", "Suprised", "Jealous",
                     "Proud", "Disgusted"]
@@ -37,7 +37,7 @@ function genDelegateList(num){
 function nameDelegates(nameList){
     //creates delegate list div to store delegates in
     const delList = document.createElement("div")
-    delList.id = "delegatelist";
+    delList.id = "delegateList";
     delList.classList.add("col-6")
 
     //finds Number of delegates and iterates through them
@@ -221,9 +221,8 @@ function calcSpeakers(minutes, speakingTime){
 //input: the speaking time for each speech
 //output: speaker's list on the speakers tab
 function genSpeakersList(minutes, speakingTime){
-    if (document.getElementById("speakerList")){
-        document.getElementById("speakerList").remove()
-    }
+    //remove speakers list if one is already open
+    clearSpeakers()
 
     let speakers = calcSpeakers(minutes, speakingTime);
     if (speakers == 0){
@@ -234,7 +233,7 @@ function genSpeakersList(minutes, speakingTime){
     const speakerList = document.createElement("div");
     speakerList.id = "speakerList";
 
-    for(let i = 0; i < speakers; i++){
+    for (let i = 0; i < speakers; i++){
         const speakerNum = document.createElement("span");
         speakerNum.classList.add("input-group-text");
         speakerNum.classList.add("col-1");
@@ -280,16 +279,14 @@ function genSpeakersList(minutes, speakingTime){
 //output: list of for and against speakers on speakers tab
 function genForAgainstList(speakers){
     //remove speakers list if one is already open
-    if (document.getElementById("speakerList")){
-        document.getElementById("speakerList").remove()
-    } 
+    clearSpeakers()
 
     //create speakers list div
     const speakerList = document.createElement("div");
     speakerList.id = "speakerList";
 
     //add speakers, alternating between for an against
-    for(let i = 0; i < (speakers * 2); i++){
+    for (let i = 0; i < (speakers * 2); i++){
         const speakerNum = document.createElement("span");
         speakerNum.classList.add("input-group-text");
         speakerNum.classList.add("col-2");
@@ -853,15 +850,62 @@ function tongaNames() {
 }
 
 //main function
+function initialize(dellist) {
+    document.getElementById("pills").style.display = "flex";
+    nameDelegates(dellist);
+    buttonfunctions();  
+}
+
+//clear delegates tab
+function clearDelegates() {
+    if (document.getElementById("delegateList")){
+        document.getElementById("delegateList").remove()
+    }
+    if (document.getElementById("delegateCount")){
+        document.getElementById("delegateCount").remove()
+    }
+}
+
+//clear motions tab
+function clearMotions() {
+    const motionssections = document.getElementById("motions").children;
+    for (let i = 0; i < motionssections.length; i++) {
+        const motions = motionssections[i].children
+        while (motions.length) {motions[0].remove()}
+    }
+}
+
+//clear speakers tab
+function clearSpeakers(){
+    if (document.getElementById("speakerList")){
+        document.getElementById("speakerList").remove()
+    }
+}
+
+//clear directives tab
+function clearDirectives(){
+    const dirs = document.getElementById("directiveslist").children
+    while (dirs.length) {dirs[0].remove()}
+}
+
+//clears page
+function clearAll(){
+    clearDelegates();
+    clearMotions();
+    clearSpeakers();
+    clearDirectives();
+}
+
+//Run AutoChair with generated delegates
 function test(){
-    nameDelegates(genDelegateList(15));
-    buttonfunctions();
+    initialize(genDelegates(15));
 }
 
 //Run AutoChair for Tonga Comittee
 function tonga(){
-    nameDelegates(tongaNames());
-    buttonfunctions();  
+    initialize(tongaNames());
 }
 
-(tonga())();
+//tonga();
+
+test();
