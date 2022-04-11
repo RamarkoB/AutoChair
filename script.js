@@ -853,7 +853,15 @@ function tongaNames() {
 }
 
 //main function
-(function(){
+function test(){
     nameDelegates(genDelegateList(15));
     buttonfunctions();
-})();
+}
+
+//Run AutoChair for Tonga Comittee
+function tonga(){
+    nameDelegates(tongaNames());
+    buttonfunctions();  
+}
+
+(tonga())();
