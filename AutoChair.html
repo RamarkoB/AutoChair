@@ -5,6 +5,8 @@
 </head>
 <html>
   <body>
+
+    <!-- Pills -->
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
       <li class="nav-item" role="presentation">
         <button class="nav-link active" id="pills-delegates-tab" data-bs-toggle="pill" data-bs-target="#pills-delegates" type="button" role="tab" aria-controls="pills-delegates" aria-selected="true">Delegates</button>
@@ -18,13 +20,34 @@
       <li class="nav-item" role="presentation">
         <button class="nav-link" id="pills-directives-tab" data-bs-toggle="pill" data-bs-target="#pills-directives" type="button" role="tab" aria-controls="pills-directives" aria-selected="false">Directives</button>
       </li>
-    </ul>
+    </ul>    
 
+    <!-- Modal -->
+    <div class="modal fade" id="errorModal" tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalTitle">Error!</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p id="errorText"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
     <div class="tab-content" id="pills-tabContent">
+      <!-- Delegates Tab -->
       <div class="tab-pane fade show active" id="pills-delegates" role="tabpanel" aria-labelledby="pills-delegates-tab">
         <div id="delegates" class="row">
         </div>
       </div>
+      <!-- Motions Tab -->
       <div class="tab-pane fade" id="pills-motions" role="tabpanel" aria-labelledby="pills-motions-tab">
         <div id="motions">
           <div id="motionMaker">
@@ -51,6 +74,7 @@
           <div id="mods"></div>
         </div>
       </div>
+      <!-- Speakers Tab -->
       <div class="tab-pane fade" id="pills-speakers" role="tabpanel" aria-labelledby="pills-speakers-tab">
         <div id="speakers">
           <div id="speakerMaker" class="input-group">
@@ -61,6 +85,7 @@
             </div>
         </div>
       </div>
+      <!-- Directives Tab -->
       <div class="tab-pane fade" id="pills-directives" role="tabpanel" aria-labelledby="pills-directives-tab">
         <div id="directives">
           <div id="dirMaker" class="input-group" style="justify-content: center; padding: 20px 10px;">
@@ -73,7 +98,6 @@
     </div>
   </body>
   
-  
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <script src="script.js"></script>
 </html>

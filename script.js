@@ -1,10 +1,14 @@
 //raise a modal for errors
 function raiseModal(error){
-    if (error == "divisibility"){
-        console.log("nah, it isn't divisiible");
+    const errorModal = new bootstrap.Modal(document.getElementById('errorModal'))
+    if (error == "divide"){
+        document.getElementById("errorText").innerText = "The total time isn't divisible by the number of speakers";
     }
-    else if (error = "empty")
-    console.log("nah, don't leave any fields blank");
+    else if (error == "empty"){
+        document.getElementById("errorText").innerText = "Don't leave any fields blank";
+    }
+
+    errorModal.toggle()
 }
 
 //input: Number of delegates desired
@@ -221,7 +225,7 @@ function genSpeakersList(minutes, speakingTime){
 
     let speakers = calcSpeakers(minutes, speakingTime);
     if (speakers == 0){
-        raiseModal("divisibility");
+        raiseModal("divide");
         return;
     }
 
@@ -403,7 +407,7 @@ function insertMod(div){
     const minutes = Number(div.dataset.minutes);
 
     if (speakers == 0){
-        raiseModal("divsibility");
+        raiseModal("divide");
         return;
     }
 
@@ -534,7 +538,7 @@ function addMotion(){
     else if (motion == "mod"){
         text = "Moderated Caucus";
 
-        if (arguments["Minutes"] == "" || arguments["Speaking Time"] == ""|| arguments["Topic"] == ""){
+        if (arguments["Minutes"] == "" || arguments["Speaking Time"] == ""){
             raiseModal("empty");
             return;
         }
