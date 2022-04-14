@@ -955,6 +955,4 @@ function elliot(){
     initialize(names);
 }
 
-tonga();
-
-//test();
+elliot();
