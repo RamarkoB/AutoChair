@@ -259,12 +259,12 @@ function genSpeakersList(minutes, speakingTime){
     
         name.appendChild(noDelegate);
 
-        const done = document.createElement("input");
+        /* const done = document.createElement("input");
         done.type = "button";
         done.value = "Add to List";
         done.classList.add("btn");
         done.classList.add("btn-primary");
-        done.classList.add("col-1");
+        done.classList.add("col-1"); */
 
         const speaker = document.createElement("div");
         speaker.id = ("speaker_" + (i + 1))
@@ -273,7 +273,7 @@ function genSpeakersList(minutes, speakingTime){
 
         speaker.appendChild(speakerNum);
         speaker.appendChild(name);
-        speaker.appendChild(done);
+        //speaker.appendChild(done);
 
         speakerList.appendChild(speaker);
     }
@@ -287,11 +287,11 @@ function genSpeakersList(minutes, speakingTime){
 //output: list of for and against speakers on speakers tab
 function genForAgainstList(speakers){
     //remove speakers list if one is already open
-    clearSpeakers()
+    clearForAgainst()
 
     //create speakers list div
     const speakerList = document.createElement("div");
-    speakerList.id = "speakerList";
+    speakerList.id = "forAgainstList";
 
     //add speakers, alternating between for an against
     for (let i = 0; i < (speakers * 2); i++){
@@ -321,12 +321,12 @@ function genForAgainstList(speakers){
     
         name.appendChild(noDelegate);
 
-        const done = document.createElement("input");
-        done.type = "button";
-        done.value = "Add to List";
-        done.classList.add("btn");
-        done.classList.add("btn-primary");
-        done.classList.add("col-1");
+        // const done = document.createElement("input");
+        // done.type = "button";
+        // done.value = "Add to List";
+        // done.classList.add("btn");
+        // done.classList.add("btn-primary");
+        // done.classList.add("col-1");
 
         const speaker = document.createElement("div");
         speaker.classList.add("input-group");
@@ -334,7 +334,7 @@ function genForAgainstList(speakers){
 
         speaker.appendChild(speakerNum);
         speaker.appendChild(name);
-        speaker.appendChild(done);
+        // speaker.appendChild(done);
 
         if (i % 2 == 0){
             speaker.id = "speakerFor_" + ((i % 2) + 1);
@@ -345,7 +345,7 @@ function genForAgainstList(speakers){
 
         speakerList.appendChild(speaker);
     }
-    speakersdiv = document.getElementById("speakers");
+    speakersdiv = document.getElementById("foragainst");
     speakersdiv.appendChild(speakerList);
 }
 
@@ -687,17 +687,18 @@ function buttonfunctions(){
         updateDelegates();
     })
 
+    //Refresh Speaker's List
+    document.getElementById("refreshspeakers").addEventListener("click", clearSpeakers);
+
+    //Generate For Against  List 
+    document.getElementById("genforagainst").addEventListener("click", function(){
+        speakersInput = parseFloat(document.getElementById("foragainstspeakers").value);
+        genForAgainstList(speakersInput);
+        updateDelegates();
+    })
+
     //Refresh Speakers Globally
-    document.getElementById("refreshspeakers").addEventListener("click", function(){
-        const minutes = document.getElementById("minutes");
-        const speakingTime = document.getElementById("speakingTime");
-        minutes.value = null;
-        speakingTime.value = null;
-        speakerList = document.getElementById("speakerList")
-        if (speakerList){
-            speakerList.remove()
-        }
-    });
+    document.getElementById("refreshforagainst").addEventListener("click", clearForAgainst);
 
     //Make a New Motion Div
     document.getElementById("makeMotion").addEventListener("change", function(event){
@@ -890,8 +891,18 @@ function clearMotions() {
 
 //clear speakers tab
 function clearSpeakers(){
+    document.getElementById("minutes").value = null;
+    document.getElementById("speakingTime").value = null;
+    
     if (document.getElementById("speakerList")){
         document.getElementById("speakerList").remove()
+    }
+}
+
+//clear speakers tab
+function clearForAgainst(){
+    if (document.getElementById("forAgainstList")){
+        document.getElementById("forAgainstList").remove()
     }
 }
 

@@ -35,6 +35,9 @@
         <button class="nav-link" id="pills-speakers-tab" data-bs-toggle="pill" data-bs-target="#pills-speakers" type="button" role="tab" aria-controls="pills-speakers" aria-selected="false">Speakers</button>
       </li>
       <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-foragainst-tab" data-bs-toggle="pill" data-bs-target="#pills-foragainst" type="button" role="tab" aria-controls="pills-foragainst" aria-selected="false">For/Against</button>
+      </li>
+      <li class="nav-item" role="presentation">
         <button class="nav-link" id="pills-directives-tab" data-bs-toggle="pill" data-bs-target="#pills-directives" type="button" role="tab" aria-controls="pills-directives" aria-selected="false">Directives</button>
       </li>
     </ul>    
@@ -83,6 +86,16 @@
           <button id="refreshspeakers" class="btn btn-primary" type="button">Refresh</button>
         </div>
         <div id="speakers"></div>
+      </div>
+
+      <!-- For/Against Tab -->
+      <div class="tab-pane fade" id="pills-foragainst" role="tabpanel" aria-labelledby="pills-foragainst-tab">
+        <div id="speakerMaker" class="input-group">
+          <input id="foragainstspeakers" type="text" class="form-control" placeholder="Speakers">
+          <button id="genforagainst" class="btn btn-primary" type="button">Generate List</button>
+          <button id="refreshforagainst" class="btn btn-primary" type="button">Refresh</button>
+        </div>
+        <div id="foragainst"></div>
       </div>
 
       <!-- Directives Tab -->
