@@ -7,7 +7,11 @@ function raiseModal(error){
     }
     //error: fields are empty
     else if (error == "empty"){
-        document.getElementById("errorText").innerText = "Don't leave any fields blank";
+        document.getElementById("errorText").innerText = "Please don't leave any fields blank";
+    }
+    //error: a delegate has not been selected
+    else if (error = "noDelegate"){
+        document.getElementById("errorText").innerText = "Please Select a Delegate";
     }
 
     errorModal.toggle()
@@ -221,18 +225,20 @@ function calcSpeakers(minutes, speakingTime){
 //input: the speaking time for each speech
 //output: speaker's list on the speakers tab
 function genSpeakersList(minutes, speakingTime){
-    //remove speakers list if one is already open
-    clearSpeakers()
-
+    //calculate number of speakers and return error if not divisible
     let speakers = calcSpeakers(minutes, speakingTime);
     if (speakers == 0){
         raiseModal("divide");
         return;
     }
 
+    //remove speakers list if one is already open
+    clearSpeakers()
+
     const speakerList = document.createElement("div");
     speakerList.id = "speakerList";
 
+    //for speaker in list, generate div
     for (let i = 0; i < speakers; i++){
         const speakerNum = document.createElement("span");
         speakerNum.classList.add("input-group-text");
@@ -271,6 +277,8 @@ function genSpeakersList(minutes, speakingTime){
 
         speakerList.appendChild(speaker);
     }
+
+    //place speakers into correct div
     speakersdiv = document.getElementById("speakers");
     speakersdiv.appendChild(speakerList);
 }
@@ -482,15 +490,24 @@ function insertUnmod(div){
 
 //generates a new motion from motion maker on motions tab
 function addMotion(){
+    //get selected motion and Delegate 
     const motion = document.getElementById("makeMotion").value;
+    const delName = document.getElementById("motionDelegate").value;
+
+    if (delName == "noDelegate" || "chooseDelegate") {
+        raiseModal("noDelegate")
+        return;
+    }
+
+    //set modifications for a motion
     const arguments = {};
-    const mods = [];
     const motionMods = document.getElementById("motionMods").children;
     if (motionMods.length > 0){
         for (let i = 0; i < motionMods.length; i++){
             arguments[motionMods[i].placeholder] = motionMods[i].value;
         }
     }
+    const mods = [delName];
     
     let text;
     let motionid;
@@ -820,33 +837,29 @@ function buttonfunctions(){
 //contains the list of all tongan names
 function tongaNames() {
     return(
-        ["Feleti Vaka'uta Sevele",
-            "Siale 'Ataongo Kaho",
-            "Samiuela 'Akilisi P\u014Diva",
-            "Sonatane Tu'akinamolahi Taumopeau Tupou",
-            "Clive Edwards",
-            "Malakai Fakatoufifita",
-            "Viliami Ta'u Tangi",
-            "'Etuate Lavulavu",
-            "Tu'ipelehake Viliami Tupoulahi Mailefihi Tuku'aho",
-            "Baron Fielakepa of Havelu",
-            "'Isileli Pulu",
-            "Afu'alo Matoto",
-            "Paul Karalus",
-            "Sione Laumanu'uli Luani",
-            "Sione Teisina Fuko",
-            "'Uliti Uata",
-            "Fineasi Funaki",
-            "Lisiate 'Aloveita 'Akolo",
-            "Sunia Fili",
-            "Siosa'ia Ma'ulupekotofa Tuita",
-            "Viliami Veasi'i Veikune",
-            "Tevita Hala Palefau",
-            "Siosa'ia Lausi'i",
-            "Sione Feingatau 'Iloa",
-            "Havea Hikule'o 'oPulotu",
-            "Samiu Vaipulu",
-            "Nikotimasi Fatafehi Laufilitonga Kakau Vaha'i"])
+        ["Afu'alo Matoto",
+        "Baron Fielakepa of Havelu",
+        "Clive Edwards",
+        "Etuate Lavulavu",
+        "Fineasi Funaki",
+        "Havea Hikule'o 'oPulotu",
+        "Isileli Pulu",
+        "Lisiate 'Aloveita 'Akolo",
+        "Nikotimasi Fatafehi Laufilitonga Kakau Vaha'i",
+        "Paul Karalus",
+        "Samiu Vaipulu",
+        "Samiuela 'Akilisi P\u014Diva",
+        "Siale 'Ataongo Kaho",
+        "Sione Feingatau 'Iloa",
+        "Sione Teisina Fuko",
+        "Siosa'ia Ma'ulupekotofa Tuita",
+        "Siosa'ia Lausi'i",
+        "Sunia Fili",
+        "Tevita Hala Palefau",
+        "Tu'ipelehake Viliami Tupoulahi Mailefihi Tuku'aho",
+        "Uliti Uata",
+        "Viliami Ta'u Tangi",
+        "Viliami Veasi'i Veikune"])
 }
 
 //main function
@@ -906,6 +919,6 @@ function tonga(){
     initialize(tongaNames());
 }
 
-//tonga();
+tonga();
 
-test();
+//test();
