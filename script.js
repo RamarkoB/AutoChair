@@ -834,42 +834,6 @@ function buttonfunctions(){
     //Make a New Directive Div
     document.getElementById("makeDir").addEventListener("click", addDir)
 }
-
-//contains the list of all tongan names
-function tongaNames() {
-    return(
-        ["Afu'alo Matoto",
-        "Baron Fielakepa of Havelu",
-        "Clive Edwards",
-        "Etuate Lavulavu",
-        "Fineasi Funaki",
-        "Havea Hikule'o 'oPulotu",
-        "Isileli Pulu",
-        "Lisiate 'Aloveita 'Akolo",
-        "Nikotimasi Fatafehi Laufilitonga Kakau Vaha'i",
-        "Paul Karalus",
-        "Samiu Vaipulu",
-        "Samiuela 'Akilisi P\u014Diva",
-        "Siale 'Ataongo Kaho",
-        "Sione Feingatau 'Iloa",
-        "Sione Teisina Fuko",
-        "Siosa'ia Ma'ulupekotofa Tuita",
-        "Siosa'ia Lausi'i",
-        "Sunia Fili",
-        "Tevita Hala Palefau",
-        "Tu'ipelehake Viliami Tupoulahi Mailefihi Tuku'aho",
-        "Uliti Uata",
-        "Viliami Ta'u Tangi",
-        "Viliami Veasi'i Veikune"])
-}
-
-//main function
-function initialize(dellist) {
-    document.getElementById("pills").style.display = "flex";
-    nameDelegates(dellist);
-    buttonfunctions();  
-}
-
 //clear delegates tab
 function clearDelegates() {
     if (document.getElementById("delegateList")){
@@ -920,6 +884,15 @@ function clearAll(){
     clearDirectives();
 }
 
+//main function
+function initialize(dellist) {
+    clearAll()
+    document.getElementById("pills").style.display = "flex";
+    nameDelegates(dellist);
+    buttonfunctions();  
+}
+
+
 //Run AutoChair with generated delegates
 function test(){
     initialize(genDelegates(15));
@@ -927,7 +900,59 @@ function test(){
 
 //Run AutoChair for Tonga Comittee
 function tonga(){
-    initialize(tongaNames());
+    const names = ["Afu'alo Matoto",
+    "Baron Fielakepa of Havelu",
+    "Clive Edwards",
+    "Etuate Lavulavu",
+    "Fineasi Funaki",
+    "Havea Hikule'o 'oPulotu",
+    "Isileli Pulu",
+    "Lisiate 'Aloveita 'Akolo",
+    "Nikotimasi Fatafehi Laufilitonga Kakau Vaha'i",
+    "Paul Karalus",
+    "Samiu Vaipulu",
+    "Samiuela 'Akilisi P\u014Diva",
+    "Siale 'Ataongo Kaho",
+    "Sione Feingatau 'Iloa",
+    "Sione Teisina Fuko",
+    "Siosa'ia Ma'ulupekotofa Tuita",
+    "Siosa'ia Lausi'i",
+    "Sunia Fili",
+    "Tevita Hala Palefau",
+    "Tu'ipelehake Viliami Tupoulahi Mailefihi Tuku'aho",
+    "Uliti Uata",
+    "Viliami Ta'u Tangi",
+    "Viliami Veasi'i Veikune"];
+    initialize(names);
+}
+
+function elliot(){
+    const names =["Maria Theresa",
+    "Hugues de Lionne",
+    "Marin Marais",
+    "François Michel Le Tellier",
+    "Henriette-Marie",
+    "Jacques-Benigne Bossuet",
+    "Henri de la Tour D'auvergne",
+    "Sébastien Le Prestre de Vauban",
+    "Nicolas Fouquet",
+    "Jean Racine",
+    "Louis Le Vau",
+    "Anne of Austria",
+    "Pierre Corneille",
+    "Jean-Baptiste Lully",
+    "Charles le Brun",
+    "Jean-Baptiste Poquelin",
+    "Jean-Baptiste Colbert",
+    "Philipe I",
+    "Louis II de Bourbon",
+    "Françoise d'Aubigné",
+    "Andre Charles Boulle",
+    "Marie Louise d'Orléans",
+    "Philippe",
+    "Henri de Guenegaud",
+    "Jocelin of Wells"]
+    initialize(names);
 }
 
 tonga();
