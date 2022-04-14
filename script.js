@@ -494,7 +494,7 @@ function addMotion(){
     const motion = document.getElementById("makeMotion").value;
     const delName = document.getElementById("motionDelegate").value;
 
-    if (delName == "noDelegate" || "chooseDelegate") {
+    if (delName == "noDelegate" || delName == "chooseDelegate") {
         raiseModal("noDelegate")
         return;
     }
@@ -668,7 +668,7 @@ function updateDelegates(){
             for (let j = 0; j < delList.length; j++){
                 const delegate = document.createElement("option");
                 const name = delList[j];
-                delegate.value = name.replace(" ","_");
+                delegate.value = name;
                 delegate.innerText = name;
     
                 delegateNames[i].appendChild(delegate);
