@@ -240,42 +240,7 @@ function genSpeakersList(minutes, speakingTime){
 
     //for speaker in list, generate div
     for (let i = 0; i < speakers; i++){
-        const speakerNum = document.createElement("span");
-        speakerNum.classList.add("input-group-text");
-        speakerNum.classList.add("col-1");
-        speakerNum.style = "justify-content: center;";
-        
-        const speakerNumText = document.createTextNode("Speaker " + (i + 1));
-        speakerNum.appendChild(speakerNumText);
-
-        const name = document.createElement("select");
-        name.classList.add("delegateName");
-        name.classList.add("form-select");
-        //name.classList.add("col-8");
-
-        const noDelegate = document.createElement("option");
-        noDelegate.value = "noDelegate";
-        noDelegate.innerText= "No Delegates";
-    
-        name.appendChild(noDelegate);
-
-        /* const done = document.createElement("input");
-        done.type = "button";
-        done.value = "Add to List";
-        done.classList.add("btn");
-        done.classList.add("btn-primary");
-        done.classList.add("col-1"); */
-
-        const speaker = document.createElement("div");
-        speaker.id = ("speaker_" + (i + 1))
-        speaker.classList.add("input-group");
-        //speaker.classList.add("row");
-
-        speaker.appendChild(speakerNum);
-        speaker.appendChild(name);
-        //speaker.appendChild(done);
-
-        speakerList.appendChild(speaker);
+        speakerList.appendChild(createSpeaker("Speaker " + (i + 1)));
     }
 
     //place speakers into correct div
@@ -295,58 +260,64 @@ function genForAgainstList(speakers){
 
     //add speakers, alternating between for an against
     for (let i = 0; i < (speakers * 2); i++){
-        const speakerNum = document.createElement("span");
-        speakerNum.classList.add("input-group-text");
-        speakerNum.classList.add("col-2");
-        speakerNum.style = "justify-content: center;";
-        
-        let speakerNumText;
         if (i % 2 == 0){
-            speakerNumText = document.createTextNode("Speaker For " + ((i / 2) + 1));
+            speakerList.appendChild(createSpeaker("Speaker For " + ((i / 2) + 1)));
         }
         else {
-            speakerNumText = document.createTextNode("Speaker Against " + (((i - 1)/2) + 2));
+            speakerList.appendChild(createSpeaker("Speaker Against " + (((i - 1)/2) + 1)));
         }
-        speakerNum.appendChild(speakerNumText);
-
-        //create individual speaker divs
-        const name = document.createElement("select");
-        name.classList.add("delegateName");
-        name.classList.add("form-select");
-        //name.classList.add("col-8");
-
-        const noDelegate = document.createElement("option");
-        noDelegate.value = "noDelegate";
-        noDelegate.innerText= "No Delegates";
-    
-        name.appendChild(noDelegate);
-
-        // const done = document.createElement("input");
-        // done.type = "button";
-        // done.value = "Add to List";
-        // done.classList.add("btn");
-        // done.classList.add("btn-primary");
-        // done.classList.add("col-1");
-
-        const speaker = document.createElement("div");
-        speaker.classList.add("input-group");
-        //speaker.classList.add("row");
-
-        speaker.appendChild(speakerNum);
-        speaker.appendChild(name);
-        // speaker.appendChild(done);
-
-        if (i % 2 == 0){
-            speaker.id = "speakerFor_" + ((i % 2) + 1);
-        }
-        else {
-            speaker.id = "speakerAgainst_" + ((i % 2) + 1);
-        }
-
-        speakerList.appendChild(speaker);
     }
     speakersdiv = document.getElementById("foragainst");
     speakersdiv.appendChild(speakerList);
+}
+
+//input: text for speaker
+//output: a speaker div
+function createSpeaker(text){
+    const speakerNum = document.createElement("span");
+    speakerNum.classList.add("input-group-text");
+    speakerNum.classList.add("col-2");
+    speakerNum.style = "justify-content: center;";
+    
+    const speakerName = document.createTextNode(text);
+    speakerNum.appendChild(speakerName);
+
+    const name = document.createElement("select");
+    name.classList.add("delegateName");
+    name.classList.add("form-select");
+
+    const noDelegate = document.createElement("option");
+    noDelegate.value = "noDelegate";
+    noDelegate.innerText= "No Delegates";
+
+    name.appendChild(noDelegate);
+
+    const done = document.createElement("input");
+    done.type = "button";
+    done.value = "Done!";
+    done.classList.add("btn");
+    done.classList.add("btn-outline-primary");
+    done.classList.add("col-1");
+    done.addEventListener("click", function(){
+        if (done.classList.contains("btn-outline-primary")){
+            done.classList.remove("btn-outline-primary");
+            done.classList.add("btn-primary");
+        }
+        else {
+            done.classList.remove("btn-primary");
+            done.classList.add("btn-outline-primary");
+        }
+    })
+
+    const speaker = document.createElement("div");
+    speaker.id = text;
+    speaker.classList.add("input-group");
+
+    speaker.appendChild(speakerNum);
+    speaker.appendChild(name);
+    speaker.appendChild(done);
+
+    return speaker;
 }
 
 //input: Name of vote, vote modifications
