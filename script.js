@@ -305,7 +305,7 @@ function genForAgainstList(speakers){
             speakerNumText = document.createTextNode("Speaker For " + ((i / 2) + 1));
         }
         else {
-            speakerNumText = document.createTextNode("Speaker Against " + (((i - 1)/2) + 2));
+            speakerNumText = document.createTextNode("Speaker Against " + (((i - 1)/2) + 1));
         }
         speakerNum.appendChild(speakerNumText);
 
