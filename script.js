@@ -926,4 +926,4 @@ function elliot(){
     initialize(names);
 }
 
-elliot();
+test();
