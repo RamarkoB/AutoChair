@@ -298,6 +298,7 @@ function createSpeaker(text){
     done.classList.add("btn");
     done.classList.add("btn-outline-primary");
     done.classList.add("col-1");
+    done.classList.add("done");
     done.addEventListener("click", function(){
         if (done.classList.contains("btn-outline-primary")){
             done.classList.remove("btn-outline-primary");
@@ -351,6 +352,7 @@ function createVote(text, mods){
     const pass = document.createElement("button");
     pass.classList.add("btn-outline-success");
     pass.classList.add("btn");
+    pass.classList.add("pass");
     pass.type = "button";
     pass.innerText = "Pass";
     pass.addEventListener("click", function(){
@@ -365,6 +367,7 @@ function createVote(text, mods){
     const fail = document.createElement("button");
     fail.classList.add("btn-outline-danger");
     fail.classList.add("btn");
+    fail.classList.add("fail");
     fail.type = "button";
     fail.innerText = "Fail";
     fail.addEventListener("click", function(){
@@ -379,6 +382,7 @@ function createVote(text, mods){
     const remove = document.createElement("button");
     remove.classList.add("btn-outline-dark");
     remove.classList.add("btn");
+    remove.classList.add("remove");
     remove.type = "button";
     remove.innerText = "Remove";
     remove.addEventListener("click", function(event){
@@ -394,7 +398,22 @@ function createVote(text, mods){
 function insertMod(div){
     //grab speakers and minutes from motion div
     const speakers = Number(div.dataset.speakers);
+    const speakingTime = Number(div.dataset.speakingTime);
     const minutes = Number(div.dataset.minutes);
+
+    const pass = div.getElementsByClassName("pass")[0];
+    pass.addEventListener("click", function(){
+        const motionsTab = document.getElementById("pills-motions");
+        motionsTab.classList.remove("show");
+        motionsTab.classList.remove("active");
+
+        const speakersTab = document.getElementById("pills-speakers");
+        speakersTab.classList.add("show");
+        speakersTab.classList.add("active");
+
+        genSpeakersList(minutes,speakingTime);
+        updateDelegates();
+    })
 
     //raise error if speakers are not divisible
     if (speakers == 0){
@@ -574,6 +593,7 @@ function addMotion(){
         insertUnmod(motiondiv);
     }
     else if (motion == "mod"){
+        motiondiv.dataset.speakingTime = arguments["Speaking Time"];
         motiondiv.dataset.speakers = calcSpeakers(arguments["Minutes"], arguments["Speaking Time"]);
         motiondiv.dataset.minutes = arguments["Minutes"];
 
