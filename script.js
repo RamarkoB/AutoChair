@@ -805,6 +805,7 @@ function buttonfunctions(){
     //Make a New Directive Div
     document.getElementById("makeDir").addEventListener("click", addDir)
 }
+
 //clear delegates tab
 function clearDelegates() {
     if (document.getElementById("delegateList")){
@@ -863,10 +864,17 @@ function initialize(dellist) {
     buttonfunctions();  
 }
 
-
 //Run AutoChair with generated delegates
 function test(){
-    initialize(genDelegates(15));
+    const landingPage = document.getElementById("landing-page");
+    const start = document.getElementById("start");
+    start.addEventListener("click", function(){
+        landingPage.classList.add("fade");
+    })
+    landingPage.addEventListener("animationend", function(){
+        landingPage.remove();
+        initialize(genDelegates(15));
+    })   
 }
 
 //Run AutoChair for Tonga Comittee

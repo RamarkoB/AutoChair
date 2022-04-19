@@ -6,6 +6,21 @@
 </head>
 <html>
   <body>
+    <!--Landing Page-->
+    <section class="grainy-gradient-intro", id="landing-page">
+      <svg height="0" width="0">
+        <filter id='f'>
+          <feTurbulence type='fractalNoise' baseFrequency='.5' />
+        </filter>
+      </svg>
+      <div class="d-flex flex-column justify-content-center align-items-center" style="height: calc(100vh - 26px);">
+          <h1 class="display-4 fw-bold text-uppercase text-light" style="letter-spacing: 15px; font-family: Futura;">AutoChair</h1>
+          <div class="btn-group my-3">
+              <a class="btn btn-outline-light" id="start">GET STARTED</a>
+          </div>
+      </div>
+  </section>
+
     <!-- Modal -->
     <div class="modal fade" id="errorModal" tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
