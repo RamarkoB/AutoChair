@@ -22,7 +22,7 @@ function raiseModal(error){
 function genDelegates(num){
     const emotions = ["Happy", "Sad", "Excited", "Scared", "Angry", "Shy", "Silly", 
                     "Bored", "Tired", "Calm", "Dissapointed", "Suprised", "Jealous",
-                    "Proud", "Disgusted, "Rambunctious"]
+                    "Proud", "Disgusted", "Rambunctious"]
     const fruits = ["Apple", "Grape", "Banana", "Orange", "Pineapple", "Mango", "Pear", 
                     "Watermelon", "Lemon", "Lime", "Peach", "Kiwi", "Plum", "Cherry", 
                     "Strawberry", "Blueberry, Papaya"]
