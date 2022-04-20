@@ -891,9 +891,10 @@ function test(){
     start.addEventListener("click", function(){
         landingPage.classList.add("fade");
     })
-    start.addEventListener("click", function(e){
-        if(e.target === this){
-            landingPage.classList.add("active");
+    landingPage.addEventListener("animationend", function(e){
+        if (e.target == this){
+            landingPage.remove();
+            initialize(genDelegates(15));
         }
     })
 }
