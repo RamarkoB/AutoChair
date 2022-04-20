@@ -891,10 +891,11 @@ function test(){
     start.addEventListener("click", function(){
         landingPage.classList.add("fade");
     })
-    landingPage.addEventListener("animationend", function(){
-        landingPage.remove();
-        initialize(genDelegates(15));
-    })   
+    start.addEventListener("click", function(e){
+        if(e.target === this){
+            landingPage.classList.add("active");
+        }
+    })
 }
 
 //Run AutoChair for Tonga Comittee
