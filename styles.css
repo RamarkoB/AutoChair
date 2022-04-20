@@ -44,7 +44,7 @@
     height: 100vh;
 } 
 
-.fade {
+.fadeout {
     animation: expand 2s;
 }
 

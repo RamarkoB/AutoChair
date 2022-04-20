@@ -19,18 +19,6 @@
             </div>
         </div>
     </section>
-
-     <script>
-        const landingPage = document.getElementById("landing-page");
-        const start = document.getElementById("start");
-        start.addEventListener("click", function(){
-            landingPage.classList.add("active");
-        })
-        landingPage.addEventListener("animationend", function(e){
-        if (e.target == this){
-            landingPage.remove();
-        }
-    })
-    </script>
+    <script src="script.js"></script>
 </html>
 
