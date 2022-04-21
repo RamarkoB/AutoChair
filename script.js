@@ -436,6 +436,37 @@ function insertVoting(div){
     }
 }
 
+//Inserts round robins from most to least disruptive
+function insertRoundRobin(div){
+    const speakingTime = Number(div.dataset.speakingTime);
+
+    //check if mods list is empty
+    const motions = document.getElementById("specialMods").children;
+
+    console.log(speakingTime);
+
+    if (motions[0]){
+        //iterate through divs to place in correct order
+        for (let i = 0; i < motions.length; i++)
+        {
+            if (speakingTime > Number(motions[i].dataset.speakingTime))
+            {
+                motions[i].before(div);
+                return;
+            }
+        }
+        //place at bottom if least diruptive
+        document.getElementById("specialMods").appendChild(div);
+        return;
+    }
+
+
+    //add first mod if list is empty
+    else {
+        document.getElementById("specialMods").appendChild(div);
+    }
+}
+
 //Inserts mods in most to least disruptive order
 function insertMod(div){
     //grab speakers and minutes from motion div
@@ -592,22 +623,17 @@ function addMotion(){
         }
     }
     else if (motion == "roundrobin"){
-        if (document.getElementById("roundrobinMotion")){
+        motionid = "roundrobinMotion"
+        text = "Round Robin";
+
+        if (arguments["Speaking Time"] == ""){
+            raiseModal("empty");
             return;
         }
-        else {
-            motionid = "roundrobinMotion"
-            text = "Round Robin";
 
-            if (arguments["Speaking Time"] == ""){
-                raiseModal("empty");
-                return;
-            }
+        mods.push(arguments["Speaking Time"] + " Seconds");
 
-            mods.push(arguments["Speaking Time"] + " Seconds");
-
-            maindiv = document.getElementById("specialMods");
-        }
+        maindiv = document.getElementById("specialMods");
     }
     else if (motion == "mod"){
         text = "Moderated Caucus";
@@ -847,6 +873,7 @@ function buttonfunctions(){
             }
             else if (motion == "roundrobin"){
                 document.getElementById("motionName").innerText = "Round Robin";
+                document.getElementById("motionMods").classList.add("input-group-text");
 
                 const speakingTime = document.createElement("input")
                 speakingTime.id = "modTime";
@@ -854,7 +881,7 @@ function buttonfunctions(){
                 speakingTime.class = "form-control";
                 speakingTime.placeholder = "Speaking Time";
 
-                document.getElementById("motionMods").classList.remove("input-group-text");
+                modifications.appendChild(speakingTime)
             }
             else if (motion == "mod"){
                 document.getElementById("motionName").innerText = "Moderated Caucus";
