@@ -25,7 +25,7 @@ function genDelegates(num){
                     "Proud", "Disgusted", "Rambunctious"]
     const fruits = ["Apple", "Grape", "Banana", "Orange", "Pineapple", "Mango", "Pear", 
                     "Watermelon", "Lemon", "Lime", "Peach", "Kiwi", "Plum", "Cherry", 
-                    "Strawberry", "Blueberry, Papaya"]
+                    "Strawberry", "Blueberry", "Papaya"]
     const names = []
     for (let i = 0; i < num; i++)
     {
@@ -394,6 +394,79 @@ function createVote(text, mods){
     return div;
 }
 
+//Inserts voting mods in most to least disruptive order
+function insertVoting(div){
+    const speakers = Number(div.dataset.speakers);
+
+    const pass = div.getElementsByClassName("pass")[0];
+    pass.addEventListener("click", function(){
+        const motionsTab = document.getElementById("pills-motions");
+        motionsTab.classList.remove("show");
+        motionsTab.classList.remove("active");
+
+        const speakersTab = document.getElementById("pills-foragainst");
+        speakersTab.classList.add("show");
+        speakersTab.classList.add("active");
+
+        genForAgainstList(speakers);
+        updateDelegates();
+    })
+
+    //check if mods list is empty
+    const motions = document.getElementById("voting").children;
+    if (motions[0]){
+        //iterate through divs to place in correct order
+        for (let i = 0; i < motions.length; i++)
+        {
+            if (speakers > Number(motions[i].dataset.speakers))
+            {
+                motions[i].before(div);
+                return;
+            }
+        }
+        //place at bottom if least diruptive
+        document.getElementById("voting").appendChild(div);
+        return;
+    }
+
+
+    //add first mod if list is empty
+    else {
+        document.getElementById("voting").appendChild(div);
+    }
+}
+
+//Inserts round robins from most to least disruptive
+function insertRoundRobin(div){
+    const speakingTime = Number(div.dataset.speakingTime);
+
+    //check if mods list is empty
+    const motions = document.getElementById("specialMods").children;
+
+    console.log(speakingTime);
+
+    if (motions[0]){
+        //iterate through divs to place in correct order
+        for (let i = 0; i < motions.length; i++)
+        {
+            if (speakingTime > Number(motions[i].dataset.speakingTime))
+            {
+                motions[i].before(div);
+                return;
+            }
+        }
+        //place at bottom if least diruptive
+        document.getElementById("specialMods").appendChild(div);
+        return;
+    }
+
+
+    //add first mod if list is empty
+    else {
+        document.getElementById("specialMods").appendChild(div);
+    }
+}
+
 //Inserts mods in most to least disruptive order
 function insertMod(div){
     //grab speakers and minutes from motion div
@@ -445,7 +518,7 @@ function insertMod(div){
         document.getElementById("mods").appendChild(div);
         return;
     }
-    //add first mood if list is empty
+    //add first mod if list is empty
     else {
         document.getElementById("mods").appendChild(div);
     }
@@ -504,6 +577,14 @@ function addMotion(){
     
     if (motion == "voting"){
         text = "Enter Voting Procedure";
+
+        if (arguments["Speakers"] == "" || arguments["Speaking Time"] == ""){
+            raiseModal("empty");
+            return;
+        }
+
+        mods.push(arguments["Speakers"] + " Speakers For/Against");
+        mods.push(arguments["Speaking Time"] + " Seconds");
         
         maindiv = document.getElementById("voting");
     }
@@ -542,14 +623,17 @@ function addMotion(){
         }
     }
     else if (motion == "roundrobin"){
-        if (document.getElementById("roundrobinMotion")){
+        motionid = "roundrobinMotion"
+        text = "Round Robin";
+
+        if (arguments["Speaking Time"] == ""){
+            raiseModal("empty");
             return;
         }
-        else {
-            motionid = "roundrobinMotion"
-            text = "Round Robin";
-            maindiv = document.getElementById("specialMods");
-        }
+
+        mods.push(arguments["Speaking Time"] + " Seconds");
+
+        maindiv = document.getElementById("specialMods");
     }
     else if (motion == "mod"){
         text = "Moderated Caucus";
@@ -587,10 +671,21 @@ function addMotion(){
     }
 
     //places in correct order depening on motion type
-    if (motion == "unmod"){
+    if (motion == "voting"){
+        motiondiv.dataset.speakingTime = arguments["Speaking Time"];
+        motiondiv.dataset.speakers = arguments["Speakers"];
+
+        insertVoting(motiondiv);
+    }
+    else if (motion == "unmod"){
         motiondiv.dataset.minutes = arguments["Minutes"];
 
         insertUnmod(motiondiv);
+    }
+    else if (motion == "roundrobin"){
+        motiondiv.dataset.speakingTime = arguments["Speaking Time"];
+
+        insertRoundRobin(motiondiv);  
     }
     else if (motion == "mod"){
         motiondiv.dataset.speakingTime = arguments["Speaking Time"];
@@ -745,7 +840,7 @@ function buttonfunctions(){
                 speakers.id = "votingSpeakers";
                 speakers.type = "text";
                 speakers.class = "form-control";
-                speakers.placeholder = "Speakers For/Against";
+                speakers.placeholder = "Speakers";
     
                 const speakingTime = document.createElement("input")
                 speakingTime.id = "modTime";
@@ -778,7 +873,15 @@ function buttonfunctions(){
             }
             else if (motion == "roundrobin"){
                 document.getElementById("motionName").innerText = "Round Robin";
-                document.getElementById("motionMods").classList.remove("input-group-text");
+                document.getElementById("motionMods").classList.add("input-group-text");
+
+                const speakingTime = document.createElement("input")
+                speakingTime.id = "modTime";
+                speakingTime.type = "text";
+                speakingTime.class = "form-control";
+                speakingTime.placeholder = "Speaking Time";
+
+                modifications.appendChild(speakingTime)
             }
             else if (motion == "mod"){
                 document.getElementById("motionName").innerText = "Moderated Caucus";
