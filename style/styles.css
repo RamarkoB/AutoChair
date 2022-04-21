@@ -75,45 +75,46 @@ body {
 }
 
 label {
-width: 100%;
+    width: 100%;
+    cursor: pointer;
 }
 
 #cardTutorial {
-animation-delay: 0.2s;
-background-image: linear-gradient(45deg, #471069, #DD6E42);
+    animation-delay: 0.2s;
+    background-image: linear-gradient(45deg, #471069, #DD6E42);
 }
 
 #cardDelegates {
-animation-delay: 0.4s;
-background-image: linear-gradient(45deg, #E0004F, #0ABAFF);
+    animation-delay: 0.4s;
+    background-image: linear-gradient(45deg, #E0004F, #0ABAFF);
 }
 
 #cardMotions {
-animation-delay: 0.6s;
-background-image: linear-gradient(45deg, #23cfa7, #fa0041);
+    animation-delay: 0.6s;
+    background-image: linear-gradient(45deg, #23cfa7, #fa0041);
 }
 
 #cardSpeakers {
-animation-delay: 0.8s;
-background-image: linear-gradient(45deg, #CC00B4, #E0D215);
+    animation-delay: 0.8s;
+    background-image: linear-gradient(45deg, #CC00B4, #E0D215);
 }
 
 #cardDirectives {
-animation-delay: 1.0s;
-background-image: linear-gradient(45deg, #40047C, #07F29C);
+    animation-delay: 1.0s;
+    background-image: linear-gradient(45deg, #40047C, #07F29C);
 }
 
 .card {
-opacity: 0;
-animation: onload 2s;
-animation-fill-mode: forwards;
-background-size: 200% 100%;
-background-position: left;
-transition: background-position ease 2s;
+    opacity: 0;
+    animation: onload 2s;
+    animation-fill-mode: forwards;
+    background-size: 200% 100%;
+    background-position: left;
+    transition: background-position ease 2s;
 }
 
 .card:hover {
-background-position: right;
+    background-position: right;   
 }
 
 .card-input-element {
