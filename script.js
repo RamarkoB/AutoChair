@@ -886,17 +886,7 @@ function initialize(dellist) {
 
 //Run AutoChair with generated delegates
 function test(){
-    const landingPage = document.getElementById("landing-page");
-    const start = document.getElementById("start");
-    start.addEventListener("click", function(){
-        landingPage.classList.add("fadeout");
-    })
-    landingPage.addEventListener("animationend", function(e){
-        if (e.target == this){
-            landingPage.remove();
-            initialize(genDelegates(15));
-        }
-    })
+    initialize(genDelegates(15));
 }
 
 //Run AutoChair for Tonga Comittee
