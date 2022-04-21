@@ -429,7 +429,7 @@ function insertVoting(div){
         return;
     }
 
-    
+
     //add first mod if list is empty
     else {
         document.getElementById("voting").appendChild(div);
@@ -598,6 +598,14 @@ function addMotion(){
         else {
             motionid = "roundrobinMotion"
             text = "Round Robin";
+
+            if (arguments["Speaking Time"] == ""){
+                raiseModal("empty");
+                return;
+            }
+
+            mods.push(arguments["Speaking Time"] + " Seconds");
+
             maindiv = document.getElementById("specialMods");
         }
     }
@@ -647,6 +655,11 @@ function addMotion(){
         motiondiv.dataset.minutes = arguments["Minutes"];
 
         insertUnmod(motiondiv);
+    }
+    else if (motion == "roundrobin"){
+        motiondiv.dataset.speakingTime = arguments["Speaking Time"];
+
+        insertRoundRobin(motiondiv);  
     }
     else if (motion == "mod"){
         motiondiv.dataset.speakingTime = arguments["Speaking Time"];
@@ -834,6 +847,13 @@ function buttonfunctions(){
             }
             else if (motion == "roundrobin"){
                 document.getElementById("motionName").innerText = "Round Robin";
+
+                const speakingTime = document.createElement("input")
+                speakingTime.id = "modTime";
+                speakingTime.type = "text";
+                speakingTime.class = "form-control";
+                speakingTime.placeholder = "Speaking Time";
+
                 document.getElementById("motionMods").classList.remove("input-group-text");
             }
             else if (motion == "mod"){
