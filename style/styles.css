@@ -81,12 +81,12 @@ label {
 
 #cardTutorial {
     animation-delay: 0.2s;
-    background-image: linear-gradient(45deg, #471069, #DD6E42);
+    background-image: linear-gradient(45deg, #E0004F, #0ABAFF);
 }
 
 #cardDelegates {
     animation-delay: 0.4s;
-    background-image: linear-gradient(45deg, #E0004F, #0ABAFF);
+    background-image: linear-gradient(45deg, #ff5410, #57a800);
 }
 
 #cardMotions {
@@ -102,6 +102,11 @@ label {
 #cardDirectives {
     animation-delay: 1.0s;
     background-image: linear-gradient(45deg, #40047C, #07F29C);
+}
+
+#gradients {
+    background-image: linear-gradient(45deg, #57a800, #f6ff00);
+    background-image: linear-gradient(45deg, #002D72, #FF5910);
 }
 
 .card {
