@@ -1,7 +1,5 @@
-#title {
-    animation-delay: 10s;
-    animation: onload 2s;
-    animation-fill-mode: forwards;
+body {
+    background-color: #FEF9F3;
 }
 
 @keyframes onload {
@@ -11,6 +9,35 @@
     to {
         opacity: 1;
     }
+}
+
+@keyframes expand {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(4)
+    }
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+#title {
+    animation-delay: 10s;
+    animation: onload 2s;
+    animation-fill-mode: forwards;
 }
 
 .grainy-gradient-intro:before {
@@ -48,31 +75,6 @@
     animation: expand 2s;
 }
 
-@keyframes expand {
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-        transform: scale(4)
-    }
-}
-
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-body {
-    background-color: #FEF9F3
-}
 
 label {
     width: 100%;
@@ -128,4 +130,34 @@ label {
 
 .card-input-element:checked + .card-input {
     border: 1px solid black;
+}
+
+header {
+    z-index: 1;
+    text-align: center;
+    border-bottom: 3px solid black;
+    top: 0;
+    position: sticky;
+    background-color: #FEF9F3;
+}
+
+.header-txt {
+    padding-top: 20px;
+    padding-bottom: 17px;
+    letter-spacing: 10px; 
+    font-family: Futura;
+    font-weight: bold;
+    color: black;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+body {
+    z-index: 0;
+}
+
+footer {
+    text-align: center;
+    border-top: 3px solid black;
+    top: 0;
 }
