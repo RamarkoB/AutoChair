@@ -116,6 +116,7 @@ label {
     animation: onload 2s;
     animation-fill-mode: forwards;
     background-size: 200% 100%;
+    border: 2px solid black;
     background-position: left;
     transition: background-position ease 2s;
 }
@@ -128,10 +129,6 @@ label {
     display: none;
 }
 
-.card-input-element:checked + .card-input {
-    border: 1px solid black;
-}
-
 header {
     z-index: 1;
     text-align: center;
@@ -142,7 +139,7 @@ header {
 }
 
 .header-txt {
-    padding-top: 20px;
+    padding-top: 27px;
     padding-bottom: 17px;
     letter-spacing: 10px; 
     font-family: Futura;
@@ -160,4 +157,8 @@ footer {
     text-align: center;
     border-top: 3px solid black;
     top: 0;
+}
+
+a {
+    text-decoration: none;
 }
