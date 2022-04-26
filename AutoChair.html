@@ -12,24 +12,28 @@
     <h1 class="header-txt fw-bold text-uppercase">AutoChair</h1>
   </header>
 
-  <body>
-    <!-- Modal -->
-    <div class="modal fade" id="errorModal" tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalTitle">Error!</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <p id="errorText"></p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
+            <!-- Modal -->
+            <div class="modal fade" id="errorModal" tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Error!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p id="errorText"></p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+  <body class="d-flex flex-column h-100">
+    <!-- Begin page content -->
+    <main class="flex-shrink-0">
+
 
     <!-- Pills -->
     <ul class="nav nav-pills mb-3" id="pills" role="tablist" style="display:none;">
@@ -120,9 +124,14 @@
       <div class="tab-pane fade" id="pills-timer" role="tabpanel" aria-labelledby="pills-timer-tab">
       </div>
     </div>
+    </main>
   </body>
 
-  <footer>
+  <body>
+
+  </body>
+
+  <footer class="mt-auto">
     <h1 class="header-txt fw-bold text-uppercase"> Hello</h1>
   </footer>
 </html>

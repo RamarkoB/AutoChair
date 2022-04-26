@@ -6,12 +6,12 @@ header {
     position: sticky;
     background-color: #FEF9F3;
 }
+
 .header {
     width: fit-content;
 }
 
 .header-txt {
-    float: ;
     text-align: center;
     padding-top: 27px;
     padding-bottom: 17px;
