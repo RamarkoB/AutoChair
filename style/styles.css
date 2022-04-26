@@ -1,14 +1,18 @@
 /* Applicable to all pages */
 header {
     z-index: 1;
-    text-align: center;
     border-bottom: 3px solid black;
     top: 0;
     position: sticky;
     background-color: #FEF9F3;
 }
+.header {
+    width: fit-content;
+}
 
 .header-txt {
+    float: ;
+    text-align: center;
     padding-top: 27px;
     padding-bottom: 17px;
     letter-spacing: 10px; 
@@ -17,6 +21,14 @@ header {
     color: black;
     font-size: 20px;
     cursor: pointer;
+}
+
+.menu-icon {
+    float: left;
+  position: absolute;
+  left: -10px;
+    fill:black;
+
 }
 
 body {
