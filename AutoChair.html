@@ -9,129 +9,127 @@
 
 <html>
   <header>
-    <h1 class="header-txt fw-bold text-uppercase">AutoChair</h1>
-  </header>
-
-            <!-- Modal -->
-            <div class="modal fade" id="errorModal" tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitle">Error!</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <p id="errorText"></p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-  <body class="d-flex flex-column h-100">
-    <!-- Begin page content -->
-    <main class="flex-shrink-0">
+    <a href="style/radio.html">
+        <h1 class="header-txt fw-bold text-uppercase">AutoChair</h1>
+    </a>
+</header>
 
 
-    <!-- Pills -->
-    <ul class="nav nav-pills mb-3" id="pills" role="tablist" style="display:none;">
-      <li class="nav-item" role="presentation">
-        <button class="nav-link text-uppercase fw-bold active" active" id="pills-delegates-tab" data-bs-toggle="pill" data-bs-target="#pills-delegates" type="button" role="tab" aria-controls="pills-delegates" aria-selected="true">Delegates</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link text-uppercase fw-bold" id="pills-motions-tab" data-bs-toggle="pill" data-bs-target="#pills-motions" type="button" role="tab" aria-controls="pills-motions" aria-selected="false">Motions</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link text-uppercase fw-bold"" id="pills-speakers-tab" data-bs-toggle="pill" data-bs-target="#pills-speakers" type="button" role="tab" aria-controls="pills-speakers" aria-selected="false">Speakers</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link text-uppercase fw-bold"" id="pills-foragainst-tab" data-bs-toggle="pill" data-bs-target="#pills-foragainst" type="button" role="tab" aria-controls="pills-foragainst" aria-selected="false">For/Against</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link text-uppercase fw-bold"" id="pills-directives-tab" data-bs-toggle="pill" data-bs-target="#pills-directives" type="button" role="tab" aria-controls="pills-directives" aria-selected="false">Directives</button>
-      </li>
-    </ul>    
-
-    <!-- Tabs -->
-    <div class="tab-content" id="pills-tabContent">
-      <!-- Delegates Tab -->
-      <div class="tab-pane fade show active" id="pills-delegates" role="tabpanel" aria-labelledby="pills-delegates-tab">
-        <div id="delegates" class="row"></div>
-      </div>
-      
-      <!-- Motions Tab -->
-      <div class="tab-pane fade" id="pills-motions" role="tabpanel" aria-labelledby="pills-motions-tab">
-        <div id="motionMaker">
-          <div id="motionNameChosen" class="input-group">
-            <select id="motionDelegate" class="delegateName form-select">
-              <option value="noDelegate">No Delegates</option>
-            </select>
-            <select id="makeMotion" class="form-select">
-              <option value="choose">Choose Motion</option>
-              <option value="voting">Enter Voting Procedure</option>
-              <option value="extend">Extend Previous Moderated Caucus</option>
-              <option value="unmod">Unmoderated Caucus</option>
-              <option value="strawpoll">Straw Poll</option>
-              <option value="roundrobin">Round Robin</option>
-              <option value="mod">Moderated Caucus</option>      
-              <option value="other">Other</option>
-            </select>
-          </div>
+<body class="d-flex flex-column h-100">
+  <!-- Modal -->
+  <div class="modal fade" id="errorModal" tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">Error!</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div id="motions">
-          <div id="other"></div>
-          <div id="voting"></div>
-          <div id="unmods"></div>
-          <div id="specialMods"></div>
-          <div id="mods"></div>
+        <div class="modal-body">
+          <p id="errorText"></p>
         </div>
-      </div>
-
-      <!-- Speakers Tab -->
-      <div class="tab-pane fade" id="pills-speakers" role="tabpanel" aria-labelledby="pills-speakers-tab">
-        <div id="speakerMaker" class="input-group">
-          <input id="minutes" type="text" class="form-control" placeholder="Minutes">
-          <input id="speakingTime" type="text" class="form-control" placeholder="Speaking Time">
-          <button id="genspeakers" class="btn btn-primary" type="button">Generate List</button>
-          <button id="refreshspeakers" class="btn btn-primary" type="button">Refresh</button>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
-        <div id="speakers"></div>
-      </div>
-
-      <!-- Directives Tab -->
-      <div class="tab-pane fade" id="pills-directives" role="tabpanel" aria-labelledby="pills-directives-tab">
-        <div id="dirMaker" class="input-group" style="justify-content: center; padding: 20px 10px;">
-          <input id="dirName" class="input-group-text" type="text" placeholder="Directive Name">
-          <button id="makeDir" class="btn btn-primary" type="button">Add Directive</button>
-        </div>
-        <div id="directives">
-          <div id="directiveslist"></div>
-        </div>
-      </div>
-
-      <!-- For/Against Tab -->
-      <div class="tab-pane fade" id="pills-foragainst" role="tabpanel" aria-labelledby="pills-foragainst-tab">
-        <div id="speakerMaker" class="input-group">
-          <input id="foragainstspeakers" type="text" class="form-control" placeholder="Speakers">
-          <button id="genforagainst" class="btn btn-primary" type="button">Generate List</button>
-          <button id="refreshforagainst" class="btn btn-primary" type="button">Refresh</button>
-        </div>
-        <div id="foragainst"></div>
-      </div>
-
-      <div class="tab-pane fade" id="pills-timer" role="tabpanel" aria-labelledby="pills-timer-tab">
       </div>
     </div>
-    </main>
+  </div>
+
+  <!-- Begin page content -->
+  <main class="flex-shrink-0">
+        <!-- Pills -->
+        <ul class="nav nav-pills mb-3" id="pills" role="tablist" style="display:none;">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-uppercase fw-bold active" active" id="pills-delegates-tab" data-bs-toggle="pill" data-bs-target="#pills-delegates" type="button" role="tab" aria-controls="pills-delegates" aria-selected="true">Delegates</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-uppercase fw-bold" id="pills-motions-tab" data-bs-toggle="pill" data-bs-target="#pills-motions" type="button" role="tab" aria-controls="pills-motions" aria-selected="false">Motions</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-uppercase fw-bold"" id="pills-speakers-tab" data-bs-toggle="pill" data-bs-target="#pills-speakers" type="button" role="tab" aria-controls="pills-speakers" aria-selected="false">Speakers</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-uppercase fw-bold"" id="pills-foragainst-tab" data-bs-toggle="pill" data-bs-target="#pills-foragainst" type="button" role="tab" aria-controls="pills-foragainst" aria-selected="false">For/Against</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-uppercase fw-bold"" id="pills-directives-tab" data-bs-toggle="pill" data-bs-target="#pills-directives" type="button" role="tab" aria-controls="pills-directives" aria-selected="false">Directives</button>
+          </li>
+        </ul>    
+    
+        <!-- Tabs -->
+        <div class="tab-content" id="pills-tabContent">
+          <!-- Delegates Tab -->
+          <div class="tab-pane fade show active" id="pills-delegates" role="tabpanel" aria-labelledby="pills-delegates-tab">
+            <div id="delegates" class="row"></div>
+          </div>
+          
+          <!-- Motions Tab -->
+          <div class="tab-pane fade" id="pills-motions" role="tabpanel" aria-labelledby="pills-motions-tab">
+            <div id="motionMaker">
+              <div id="motionNameChosen" class="input-group">
+                <select id="motionDelegate" class="delegateName form-select">
+                  <option value="noDelegate">No Delegates</option>
+                </select>
+                <select id="makeMotion" class="form-select">
+                  <option value="choose">Choose Motion</option>
+                  <option value="voting">Enter Voting Procedure</option>
+                  <option value="extend">Extend Previous Moderated Caucus</option>
+                  <option value="unmod">Unmoderated Caucus</option>
+                  <option value="strawpoll">Straw Poll</option>
+                  <option value="roundrobin">Round Robin</option>
+                  <option value="mod">Moderated Caucus</option>      
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+            <div id="motions">
+              <div id="other"></div>
+              <div id="voting"></div>
+              <div id="unmods"></div>
+              <div id="specialMods"></div>
+              <div id="mods"></div>
+            </div>
+          </div>
+    
+          <!-- Speakers Tab -->
+          <div class="tab-pane fade" id="pills-speakers" role="tabpanel" aria-labelledby="pills-speakers-tab">
+            <div id="speakerMaker" class="input-group">
+              <input id="minutes" type="text" class="form-control" placeholder="Minutes">
+              <input id="speakingTime" type="text" class="form-control" placeholder="Speaking Time">
+              <button id="genspeakers" class="btn btn-primary" type="button">Generate List</button>
+              <button id="refreshspeakers" class="btn btn-primary" type="button">Refresh</button>
+            </div>
+            <div id="speakers"></div>
+          </div>
+    
+          <!-- Directives Tab -->
+          <div class="tab-pane fade" id="pills-directives" role="tabpanel" aria-labelledby="pills-directives-tab">
+            <div id="dirMaker" class="input-group" style="justify-content: center; padding: 20px 10px;">
+              <input id="dirName" class="input-group-text" type="text" placeholder="Directive Name">
+              <button id="makeDir" class="btn btn-primary" type="button">Add Directive</button>
+            </div>
+            <div id="directives">
+              <div id="directiveslist"></div>
+            </div>
+          </div>
+    
+          <!-- For/Against Tab -->
+          <div class="tab-pane fade" id="pills-foragainst" role="tabpanel" aria-labelledby="pills-foragainst-tab">
+            <div id="speakerMaker" class="input-group">
+              <input id="foragainstspeakers" type="text" class="form-control" placeholder="Speakers">
+              <button id="genforagainst" class="btn btn-primary" type="button">Generate List</button>
+              <button id="refreshforagainst" class="btn btn-primary" type="button">Refresh</button>
+            </div>
+            <div id="foragainst"></div>
+          </div>
+    
+          <div class="tab-pane fade" id="pills-timer" role="tabpanel" aria-labelledby="pills-timer-tab">
+          </div>
+        </div>
+  </main>
+
   </body>
 
-  <body>
-
-  </body>
-
-  <footer class="mt-auto">
+  <footer>
     <h1 class="header-txt fw-bold text-uppercase"> Hello</h1>
   </footer>
 </html>

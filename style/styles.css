@@ -1,6 +1,6 @@
 /* Applicable to all pages */
 header {
-    z-index: 1;
+    z-index: 5;
     border-bottom: 3px solid black;
     top: 0;
     position: sticky;
