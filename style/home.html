@@ -106,4 +106,44 @@
     <footer class="mt-auto">
         <h1 class="header-txt fw-bold text-uppercase"> Hello</h1>
     </footer>
+
+    <script>
+      delarray = ["Maria Theresa, Wife of the King",
+    "Hugues de Lionne",
+    "Marin Marais",
+    "Fran\u00E7ois Michel Le Tellier",
+    "Henriette-Marie",
+    "Jacques-Benigne Bossuet",
+    "Henri de la Tour D'auvergne",
+    "S\u00E9bastien Le Prestre de Vauban",
+    "Nicolas Fouquet",
+    "Jean Racine",
+    "Louis Le Vau",
+    "Anne of Austria",
+    "Pierre Corneille",
+    "Jean-Baptiste Lully",
+    "Charles le Brun",
+    "Jean-Baptiste Poquelin",
+    "Jean-Baptiste Colbert",
+    "Philipe I",
+    "Louis II de Bourbon",
+    "Fran\u00E7oise d'Aubign\u00E9",
+    "Andre Charles Boulle",
+    "Marie Louise d'Orl\u00E9ans",
+    "Philippe",
+    "Henri de Guenegaud",
+    "Jocelin of Wells"]
+      for (let i = 0; i < delarray.length; i++){
+        if (i == 0){
+          delarray[i] = delarray[i] + "`";
+        }
+        else if (i == delarray.length - 1) {
+          delarray[i] = "`" + delarray[i];
+        }
+        else {
+          delarray[i] = "`" + delarray[i] + "`";
+        }
+      }
+      localStorage.setItem("favoriteMovie", delarray);
+    </script>
 </html>
