@@ -3,6 +3,7 @@
     <title>Ramarko's Auto Chair</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="style/styles.css" rel="stylesheet">
+    <link href="timer/style.css" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script defer src="script.js"></script>
 </head>
@@ -13,8 +14,7 @@
         <h1 class="header-txt fw-bold text-uppercase">AutoChair</h1>
     </a>
 </header>
-
-
+  
 <body class="d-flex flex-column h-100">
   <!-- Modal -->
   <div class="modal fade" id="errorModal" tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -36,24 +36,28 @@
 
   <!-- Begin page content -->
   <main class="flex-shrink-0">
-        <!-- Pills -->
-        <ul class="nav nav-pills mb-3" id="pills" role="tablist" style="display:none;">
-          <li class="nav-item" role="presentation">
-            <button class="nav-link text-uppercase fw-bold active" active" id="pills-delegates-tab" data-bs-toggle="pill" data-bs-target="#pills-delegates" type="button" role="tab" aria-controls="pills-delegates" aria-selected="true">Delegates</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link text-uppercase fw-bold" id="pills-motions-tab" data-bs-toggle="pill" data-bs-target="#pills-motions" type="button" role="tab" aria-controls="pills-motions" aria-selected="false">Motions</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link text-uppercase fw-bold"" id="pills-speakers-tab" data-bs-toggle="pill" data-bs-target="#pills-speakers" type="button" role="tab" aria-controls="pills-speakers" aria-selected="false">Speakers</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link text-uppercase fw-bold"" id="pills-foragainst-tab" data-bs-toggle="pill" data-bs-target="#pills-foragainst" type="button" role="tab" aria-controls="pills-foragainst" aria-selected="false">For/Against</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link text-uppercase fw-bold"" id="pills-directives-tab" data-bs-toggle="pill" data-bs-target="#pills-directives" type="button" role="tab" aria-controls="pills-directives" aria-selected="false">Directives</button>
-          </li>
-        </ul>    
+
+       <!-- Pills -->
+       <ul class="nav nav-pills mb-3" id="pills" role="tablist" style="display:none;">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link text-uppercase fw-bold active" active" id="pills-delegates-tab" data-bs-toggle="pill" data-bs-target="#pills-delegates" type="button" role="tab" aria-controls="pills-delegates" aria-selected="true">Delegates</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link text-uppercase fw-bold" id="pills-motions-tab" data-bs-toggle="pill" data-bs-target="#pills-motions" type="button" role="tab" aria-controls="pills-motions" aria-selected="false">Motions</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link text-uppercase fw-bold"" id="pills-speakers-tab" data-bs-toggle="pill" data-bs-target="#pills-speakers" type="button" role="tab" aria-controls="pills-speakers" aria-selected="false">Speakers</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link text-uppercase fw-bold"" id="pills-foragainst-tab" data-bs-toggle="pill" data-bs-target="#pills-foragainst" type="button" role="tab" aria-controls="pills-foragainst" aria-selected="false">For/Against</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link text-uppercase fw-bold"" id="pills-directives-tab" data-bs-toggle="pill" data-bs-target="#pills-directives" type="button" role="tab" aria-controls="pills-directives" aria-selected="false">Directives</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link text-uppercase fw-bold"" id="pills-timer-tab" data-bs-toggle="pill" data-bs-target="#pills-timer" type="button" role="tab" aria-controls="pills-timer" aria-selected="false">Timer</button>
+        </li>
+      </ul>   
     
         <!-- Tabs -->
         <div class="tab-content" id="pills-tabContent">
@@ -127,6 +131,29 @@
         </div>
   </main>
 
+       <!-- Timer Tab -->
+       <div class="tab-pane fade" id="pills-timer" role="tabpanel" aria-labelledby="pills-timer-tab">
+         	<!-- Countdowns space -->
+          <div class="col-lg-8 mx-auto">
+            <!-- Countdown-->
+            <div class="my-2 countdown-inactive rounded text-center border border-2 border-dark">
+              <div class="countdown py-4">
+                <p class="timer-inactive"><input class="timer-minutes" placeholder="00" maxlength="2" pattern="\d*"></input> min 
+                  <input class="timer-seconds" placeholder="00" maxlength="2" pattern="\d*"></input> sec</p>
+              </div>
+              
+              <!-- Call to actions -->
+              <ul class="list-inline">
+                <li class="list-inline-item">
+                  <button type="button" class="btn btn-demo btn-timer-reset"><i class="glyphicon glyphicon-repeat"></i>Reset</button>
+                </li>
+                <li class="list-inline-item">
+                  <button type="button" class="btn btn-demo btn-timer-multiuse"><i class="glyphicon glyphicon-repeat"></i>Start</button>
+                </li>
+              </ul>
+            </div>
+      </div>
+    </div>
   </body>
 
   <footer>
