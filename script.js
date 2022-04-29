@@ -648,6 +648,94 @@ function updateDelegates(){
     }
 }
 
+//adds functionality to countdowns
+function makeCountdowns(){
+	const countdowns = document.getElementsByClassName("countdown-inactive");
+	for (let i = 0; i < countdowns.length; i++) {
+		const countdown = countdowns[i];
+		countdown.dataset.state = "inactive";
+		const btn = countdown.getElementsByClassName("btn-timer-multiuse")[0];
+
+		btn.addEventListener("click", function() {
+			if (countdown.dataset.state == "inactive") {
+				const minutes = countdown.getElementsByClassName("timer-minutes")[0].value;
+				const seconds = countdown.getElementsByClassName("timer-seconds")[0].value;
+				const timer = countdown.getElementsByClassName("timer-inactive")[0];
+
+				timer.innerHTML = "<p class='timer-active'><span class='timer-min' class='h1 font-weight-bold'></span> Min <span class='timer-sec' class='h1 font-weight-bold'></span> sec</p>";
+				timer.className = "timer-active";
+
+				const offset = Number(minutes)*60*1000 + Number(seconds)*1000;
+				const deadline = new Date(Date.parse(new Date()) + offset);
+
+				countdown.dataset.deadline = deadline;
+				countdown.dataset.offset = offset;
+				countdown.dataset.state = "active";
+
+				btn.innerText = "Pause";
+				run_clock(countdown, deadline);
+			}
+			else if (countdown.dataset.state == "active") {
+				btn.innerText = "Resume";
+
+				// stop the clock
+				clearInterval(timeinterval);
+
+				// preserve remaining time
+				time_left = time_remaining(countdown.dataset.deadline).total;
+				countdown.dataset.state = "paused";
+			}
+			else {
+				btn.innerText = "Pause";
+
+				// update the deadline to preserve the amount of time remaining
+				deadline = new Date(Date.parse(new Date()) + time_left);
+
+				// start the clock
+				run_clock(countdown, deadline);
+
+				countdown.dataset.state = "active";
+			}
+		})
+
+		const reset = countdown.getElementsByClassName("btn-timer-reset")[0];
+		reset.addEventListener("click", function(){
+			clearInterval(timeinterval);
+			
+			const offset = Number(countdown.dataset.offset)
+			const deadline = new Date(Date.parse(new Date()) + offset);
+			countdown.dataset.deadline = deadline;
+			countdown.dataset.state = "active";
+
+			btn.innerText = "Pause";
+			run_clock(countdown, deadline);	
+		})
+	}
+
+	function time_remaining(endtime){
+		var t = Date.parse(endtime) - Date.parse(new Date());
+		var seconds = Math.floor( (t/1000) % 60 );
+		var minutes = Math.floor( (t/1000/60) % 60 );
+		var hours = Math.floor( (t/(1000*60*60)) % 24 );
+		var days = Math.floor( t/(1000*60*60*24) );
+		return {'total':t, 'days':days, 'hours':hours, 'minutes':minutes, 'seconds':seconds};
+	}
+
+	function run_clock(countdownDiv, endtime){
+		function update_clock(){
+			const t = time_remaining(endtime);
+			const minutes = countdownDiv.getElementsByClassName("timer-min")[0];
+			const seconds = countdownDiv.getElementsByClassName("timer-sec")[0];
+			minutes.innerText = t.minutes;
+			seconds.innerText = t.seconds;
+			if(t.total<=0){ clearInterval(timeinterval); }
+		}
+		update_clock(); // run function once at first to avoid delay
+		timeinterval = setInterval(update_clock,1000);
+	}
+}
+
+
 //add functionaility to various interactible elements
 function buttonfunctions(){
     //Generate a Speaker's List for a moderated caucus
@@ -805,6 +893,7 @@ function buttonfunctions(){
     //Make a New Directive Div
     document.getElementById("makeDir").addEventListener("click", addDir)
 }
+
 //clear delegates tab
 function clearDelegates() {
     if (document.getElementById("delegateList")){
@@ -861,8 +950,8 @@ function initialize(dellist) {
     document.getElementById("pills").style.display = "flex";
     nameDelegates(dellist);
     buttonfunctions();  
+    makeCountdowns();
 }
-
 
 //Run AutoChair with generated delegates
 function test(){

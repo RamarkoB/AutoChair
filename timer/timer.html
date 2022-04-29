@@ -8,35 +8,37 @@
 </head>
 
 <html>
-	<!-- Countdown -->
+	<!-- Countdowns space -->
 	<div class="col-lg-8 mx-auto">
-		<div class="my-2 countdown py-4 rounded text-center border border-dark">
-			<div>
-				<p class="timer-active"><span id="timer-min" class="h1 font-weight-bold"></span> Min <span id="timer-sec" class="h1 font-weight-bold"></span> sec</p>
-			</div>
-			
-			<!-- Call to actions -->
-			<ul class="list-inline">
-				<li class="list-inline-item">
-					<button id="btn-reset" type="button" class="btn btn-demo"><i class="glyphicon glyphicon-repeat"></i>Reset</button>
-				</li>
-				<li class="list-inline-item">
-					<button id="btn-pause-resume" type="button" class="btn btn-demo"><i class="glyphicon glyphicon-repeat"></i>Pause</button>
-				</li>
-			</ul>
-		</div>
-	
 		<!-- Countdown-->
-		<div class="my-2 countdown-inactive rounded text-center border border-dark">
+		<div class="my-2 countdown-inactive rounded text-center border border-2 border-dark">
 			<div class="countdown py-4">
-				<p class="timer-inactive" style="color:gray"><input class="timer-minutes" placeholder="00" maxlength="2" pattern="\d*"></input> min 
+				<p class="timer-inactive"><input class="timer-minutes" placeholder="00" maxlength="2" pattern="\d*"></input> min 
 					<input class="timer-seconds" placeholder="00" maxlength="2" pattern="\d*"></input> sec</p>
 			</div>
 			
 			<!-- Call to actions -->
 			<ul class="list-inline">
 				<li class="list-inline-item">
-					<button type="button" class="btn btn-demo"><i class="btn-timer-reset glyphicon glyphicon-repeat"></i>Reset</button>
+					<button type="button" class="btn btn-demo btn-timer-reset"><i class="glyphicon glyphicon-repeat"></i>Reset</button>
+				</li>
+				<li class="list-inline-item">
+					<button type="button" class="btn btn-demo btn-timer-multiuse"><i class="glyphicon glyphicon-repeat"></i>Start</button>
+				</li>
+			</ul>
+		</div>
+	
+		<!-- Countdown-->
+		<div class="my-2 countdown-inactive rounded text-center border border-2 border-dark">
+			<div class="countdown py-4">
+				<p class="timer-inactive"><input class="timer-minutes" placeholder="00" maxlength="2" pattern="\d*"></input> min 
+					<input class="timer-seconds" placeholder="00" maxlength="2" pattern="\d*"></input> sec</p>
+			</div>
+			
+			<!-- Call to actions -->
+			<ul class="list-inline">
+				<li class="list-inline-item">
+					<button type="button" class="btn btn-demo btn-timer-reset"><i class="glyphicon glyphicon-repeat"></i>Reset</button>
 				</li>
 				<li class="list-inline-item">
 					<button type="button" class="btn btn-demo btn-timer-multiuse"><i class="glyphicon glyphicon-repeat"></i>Start</button>
@@ -48,83 +50,91 @@
 
 <script>
 
-const countdowns = document.getElementsByClassName("countdown-inactive");
-for (let i = 0; i < countdowns.length; i++) {
-	const countdown = countdowns[0];
-	const btn = countdown.getElementsByClassName("btn-timer-multiuse")[0];
-	btn.addEventListener("click", function() {
-		const minutes = parseInt(countdown.getElementsByClassName("timer-minutes")[0]);
-		const seconds = parseInt(countdown.getElementsByClassName("timer-seconds")[0]);
-		const deadline = new Date(current_time + minutes*60*1000);
-		console.log(deadline);
-		run_clock(deadline);
-	})
-	console.log(btn);
-}
+function makeCountdowns(){
+	const countdowns = document.getElementsByClassName("countdown-inactive");
+	for (let i = 0; i < countdowns.length; i++) {
+		const countdown = countdowns[i];
+		countdown.dataset.state = "inactive";
+		const btn = countdown.getElementsByClassName("btn-timer-multiuse")[0];
 
+		btn.addEventListener("click", function() {
+			if (countdown.dataset.state == "inactive") {
+				const minutes = countdown.getElementsByClassName("timer-minutes")[0].value;
+				const seconds = countdown.getElementsByClassName("timer-seconds")[0].value;
+				const timer = countdown.getElementsByClassName("timer-inactive")[0];
 
+				timer.innerHTML = "<p class='timer-active'><span class='timer-min' class='h1 font-weight-bold'></span> Min <span class='timer-sec' class='h1 font-weight-bold'></span> sec</p>";
+				timer.className = "timer-active";
 
-function time_remaining(endtime){
-	var t = Date.parse(endtime) - Date.parse(new Date());
-	var seconds = Math.floor( (t/1000) % 60 );
-	var minutes = Math.floor( (t/1000/60) % 60 );
-	var hours = Math.floor( (t/(1000*60*60)) % 24 );
-	var days = Math.floor( t/(1000*60*60*24) );
-	return {'total':t, 'days':days, 'hours':hours, 'minutes':minutes, 'seconds':seconds};
-}
+				const offset = Number(minutes)*60*1000 + Number(seconds)*1000;
+				const deadline = new Date(Date.parse(new Date()) + offset);
 
-// 10 minutes from now
-var time_in_minutes = 10;
-var current_time = Date.parse(new Date());
-var deadline = new Date(current_time + time_in_minutes*60*1000);
+				countdown.dataset.deadline = deadline;
+				countdown.dataset.offset = offset;
+				countdown.dataset.state = "active";
 
-var timeinterval;
-function run_clock(endtime){
-	function update_clock(){
-		var t = time_remaining(endtime);
-		const minutes = document.getElementById("timer-min");
-		const seconds = document.getElementById("timer-sec");
-		minutes.innerText = t.minutes;
-		seconds.innerText = t.seconds;
-		if(t.total<=0){ clearInterval(timeinterval); }
-	}
-	update_clock(); // run function once at first to avoid delay
-	timeinterval = setInterval(update_clock,1000);
-}
+				btn.innerText = "Pause";
+				run_clock(countdown, deadline);
+			}
+			else if (countdown.dataset.state == "active") {
+				btn.innerText = "Resume";
 
+				// stop the clock
+				clearInterval(timeinterval);
 
+				// preserve remaining time
+				time_left = time_remaining(countdown.dataset.deadline).total;
+				countdown.dataset.state = "paused";
+			}
+			else {
+				btn.innerText = "Pause";
 
-var paused = false; // is the clock paused?
-var time_left; // time left on the clock when paused
+				// update the deadline to preserve the amount of time remaining
+				deadline = new Date(Date.parse(new Date()) + time_left);
 
+				// start the clock
+				run_clock(countdown, deadline);
 
-// handle pause and resume button clicks
-document.getElementById("btn-pause-resume").addEventListener("click", function(e){
-	const pauseresume = document.getElementById("btn-pause-resume")
+				countdown.dataset.state = "active";
+			}
+		})
 
-	if (paused){
-		paused = false;
-		pauseresume.innerText = "Pause";
+		const reset = countdown.getElementsByClassName("btn-timer-reset")[0];
+		reset.addEventListener("click", function(){
+			clearInterval(timeinterval);
+			
+			const offset = Number(countdown.dataset.offset)
+			const deadline = new Date(Date.parse(new Date()) + offset);
+			countdown.dataset.deadline = deadline;
+			countdown.dataset.state = "active";
 
-		// update the deadline to preserve the amount of time remaining
-		deadline = new Date(Date.parse(new Date()) + time_left);
-
-		// start the clock
-		run_clock(deadline);
-	}
-	else if (!paused){
-		paused = true;
-		document.getElementById("btn-pause-resume");
-		pauseresume.innerText = "Resume";
-
-		 // stop the clock
-		clearInterval(timeinterval);
-
-		// preserve remaining time
-		time_left = time_remaining(deadline).total; 
+			btn.innerText = "Pause";
+			run_clock(countdown, deadline);	
+		})
 	}
 
-})
+	function time_remaining(endtime){
+		var t = Date.parse(endtime) - Date.parse(new Date());
+		var seconds = Math.floor( (t/1000) % 60 );
+		var minutes = Math.floor( (t/1000/60) % 60 );
+		var hours = Math.floor( (t/(1000*60*60)) % 24 );
+		var days = Math.floor( t/(1000*60*60*24) );
+		return {'total':t, 'days':days, 'hours':hours, 'minutes':minutes, 'seconds':seconds};
+	}
 
+	function run_clock(countdownDiv, endtime){
+		function update_clock(){
+			const t = time_remaining(endtime);
+			const minutes = countdownDiv.getElementsByClassName("timer-min")[0];
+			const seconds = countdownDiv.getElementsByClassName("timer-sec")[0];
+			minutes.innerText = t.minutes;
+			seconds.innerText = t.seconds;
+			if(t.total<=0){ clearInterval(timeinterval); }
+		}
+		update_clock(); // run function once at first to avoid delay
+		timeinterval = setInterval(update_clock,1000);
+	}
+}
 
+(makeCountdowns())();
 </script>
