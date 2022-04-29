@@ -59,96 +59,83 @@
           </li>
         </ul>   
       
-          <!-- Tabs -->
-          <div class="tab-content" id="pills-tabContent">
-            <!-- Delegates Tab -->
-            <div class="tab-pane fade show active" id="pills-delegates" role="tabpanel" aria-labelledby="pills-delegates-tab">
-              <div id="delegates" class="row"></div>
-            </div>
-            
-            <!-- Motions Tab -->
-            <div class="tab-pane fade" id="pills-motions" role="tabpanel" aria-labelledby="pills-motions-tab">
-              <div id="motionMaker">
-                <div id="motionNameChosen" class="input-group">
-                  <select id="motionDelegate" class="delegateName form-select">
-                    <option value="noDelegate">No Delegates</option>
-                  </select>
-                  <select id="makeMotion" class="form-select">
-                    <option value="choose">Choose Motion</option>
-                    <option value="voting">Enter Voting Procedure</option>
-                    <option value="extend">Extend Previous Moderated Caucus</option>
-                    <option value="unmod">Unmoderated Caucus</option>
-                    <option value="strawpoll">Straw Poll</option>
-                    <option value="roundrobin">Round Robin</option>
-                    <option value="mod">Moderated Caucus</option>      
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-              </div>
-              <div id="motions">
-                <div id="other"></div>
-                <div id="voting"></div>
-                <div id="unmods"></div>
-                <div id="specialMods"></div>
-                <div id="mods"></div>
+        <!-- Tabs -->
+        <div class="tab-content" id="pills-tabContent">
+          <!-- Delegates Tab -->
+          <div class="tab-pane fade show active" id="pills-delegates" role="tabpanel" aria-labelledby="pills-delegates-tab">
+            <div id="delegates" class="row"></div>
+          </div>
+          
+          <!-- Motions Tab -->
+          <div class="tab-pane fade" id="pills-motions" role="tabpanel" aria-labelledby="pills-motions-tab">
+            <div id="motionMaker">
+              <div id="motionNameChosen" class="input-group">
+                <select id="motionDelegate" class="delegateName form-select">
+                  <option value="noDelegate">No Delegates</option>
+                </select>
+                <select id="makeMotion" class="form-select">
+                  <option value="choose">Choose Motion</option>
+                  <option value="voting">Enter Voting Procedure</option>
+                  <option value="extend">Extend Previous Moderated Caucus</option>
+                  <option value="unmod">Unmoderated Caucus</option>
+                  <option value="strawpoll">Straw Poll</option>
+                  <option value="roundrobin">Round Robin</option>
+                  <option value="mod">Moderated Caucus</option>      
+                  <option value="other">Other</option>
+                </select>
               </div>
             </div>
-      
-            <!-- Speakers Tab -->
-            <div class="tab-pane fade" id="pills-speakers" role="tabpanel" aria-labelledby="pills-speakers-tab">
-              <div id="speakerMaker" class="input-group">
-                <input id="minutes" type="text" class="form-control" placeholder="Minutes">
-                <input id="speakingTime" type="text" class="form-control" placeholder="Speaking Time">
-                <button id="genspeakers" class="btn btn-primary" type="button">Generate List</button>
-                <button id="refreshspeakers" class="btn btn-primary" type="button">Refresh</button>
-              </div>
-              <div id="speakers"></div>
-            </div>
-      
-            <!-- Directives Tab -->
-            <div class="tab-pane fade" id="pills-directives" role="tabpanel" aria-labelledby="pills-directives-tab">
-              <div id="dirMaker" class="input-group" style="justify-content: center; padding: 20px 10px;">
-                <input id="dirName" class="input-group-text" type="text" placeholder="Directive Name">
-                <button id="makeDir" class="btn btn-primary" type="button">Add Directive</button>
-              </div>
-              <div id="directives">
-                <div id="directiveslist"></div>
-              </div>
-            </div>
-      
-            <!-- For/Against Tab -->
-            <div class="tab-pane fade" id="pills-foragainst" role="tabpanel" aria-labelledby="pills-foragainst-tab">
-              <div id="speakerMaker" class="input-group">
-                <input id="foragainstspeakers" type="text" class="form-control" placeholder="Speakers">
-                <button id="genforagainst" class="btn btn-primary" type="button">Generate List</button>
-                <button id="refreshforagainst" class="btn btn-primary" type="button">Refresh</button>
-              </div>
-              <div id="foragainst"></div>
-            </div>
-      
-            <div class="tab-pane fade" id="pills-timer" role="tabpanel" aria-labelledby="pills-timer-tab">
-                <!-- Countdowns space -->
-                <div class="col-lg-8 mx-auto">
-                  <!-- Countdown-->
-                  <div class="my-2 countdown-inactive rounded text-center border border-2 border-dark">
-                    <div class="countdown py-4">
-                      <p class="timer-inactive"><input class="timer-minutes" placeholder="00" maxlength="2" pattern="\d*"></input> min 
-                        <input class="timer-seconds" placeholder="00" maxlength="2" pattern="\d*"></input> sec</p>
-                    </div>
-                    
-                    <!-- Call to actions -->
-                    <ul class="list-inline">
-                      <li class="list-inline-item">
-                        <button type="button" class="btn btn-demo btn-timer-reset"><i class="glyphicon glyphicon-repeat"></i>Reset</button>
-                      </li>
-                      <li class="list-inline-item">
-                        <button type="button" class="btn btn-demo btn-timer-multiuse"><i class="glyphicon glyphicon-repeat"></i>Start</button>
-                      </li>
-                    </ul>
-                  </div>
-              </div>
+            <div id="motions">
+              <div id="other"></div>
+              <div id="voting"></div>
+              <div id="unmods"></div>
+              <div id="specialMods"></div>
+              <div id="mods"></div>
             </div>
           </div>
+    
+          <!-- Speakers Tab -->
+          <div class="tab-pane fade" id="pills-speakers" role="tabpanel" aria-labelledby="pills-speakers-tab">
+            <div id="speakerMaker" class="input-group">
+              <input id="minutes" type="text" class="form-control" placeholder="Minutes">
+              <input id="speakingTime" type="text" class="form-control" placeholder="Speaking Time">
+              <button id="genspeakers" class="btn btn-primary" type="button">Generate List</button>
+              <button id="refreshspeakers" class="btn btn-primary" type="button">Refresh</button>
+            </div>
+            <div id="speakers"></div>
+          </div>
+    
+          <!-- Directives Tab -->
+          <div class="tab-pane fade" id="pills-directives" role="tabpanel" aria-labelledby="pills-directives-tab">
+            <div id="dirMaker" class="input-group" style="justify-content: center; padding: 20px 10px;">
+              <input id="dirName" class="input-group-text" type="text" placeholder="Directive Name">
+              <button id="makeDir" class="btn btn-primary" type="button">Add Directive</button>
+            </div>
+            <div id="directives">
+              <div id="directiveslist"></div>
+            </div>
+          </div>
+    
+          <!-- For/Against Tab -->
+          <div class="tab-pane fade" id="pills-foragainst" role="tabpanel" aria-labelledby="pills-foragainst-tab">
+            <div id="speakerMaker" class="input-group">
+              <input id="foragainstspeakers" type="text" class="form-control" placeholder="Speakers">
+              <button id="genforagainst" class="btn btn-primary" type="button">Generate List</button>
+              <button id="refreshforagainst" class="btn btn-primary" type="button">Refresh</button>
+            </div>
+            <div id="foragainst"></div>
+          </div>
+    
+          <!-- Timers Tab-->
+          <div class="tab-pane fade" id="pills-timer" role="tabpanel" aria-labelledby="pills-timer-tab">
+              <!-- Countdowns space -->
+              <div id="countdownDiv" class="col-lg-8 mx-auto">
+                <div id="timerBtnDiv" class="my-2 text-center">
+                  <button type="button" id="btn-timer-new" class="btn btn-demo">Add Timer</button>
+                </div>
+              </div>
+          </div>
+        </div>
     </main>
   </body>
 
@@ -161,3 +148,24 @@
     console.log(movie.split("`,`"));
   </script>
 </html>
+
+
+<template id="template-countdown">
+  <!-- Countdown-->
+    <div id="new-countdown" class="my-2 countdown-inactive rounded text-center border border-2 border-dark">
+      <div class="countdown py-4">
+        <p class="timer-inactive"><input class="timer-minutes" placeholder="00" maxlength="2" pattern="\d*"></input> min 
+          <input class="timer-seconds" placeholder="00" maxlength="2" pattern="\d*"></input> sec</p>
+      </div>
+      
+      <!-- Call to actions -->
+      <ul class="list-inline">
+        <li class="list-inline-item">
+          <button type="button" class="btn btn-demo btn-timer-reset"><i class="glyphicon glyphicon-repeat"></i>Reset</button>
+        </li>
+        <li class="list-inline-item">
+          <button type="button" class="btn btn-demo btn-timer-multiuse"><i class="glyphicon glyphicon-repeat"></i>Start</button>
+        </li>
+      </ul>
+    </div>
+  </template>

@@ -88,9 +88,17 @@
         font-weight: bold !important;
     }
 
-    .btn-demo:hover, .btn-demo:focus {
+    .btn-demo:hover{
         color: #fff;
         background: rgb(100, 100, 100);
+    }
+
+    .btn:focus{
+        box-shadow: none;
+    }
+
+    .btn-active {
+        color:black
     }
 
     .countdown input {
