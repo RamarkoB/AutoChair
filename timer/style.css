@@ -5,17 +5,20 @@
     * ==================================================
     *
     */
-    .countdown {
+    .timer {
         text-transform: uppercase;
         font-weight: 500;
+        width: fit-content;
+        margin: auto;
+        cursor: text;
     }
 
-    .countdown span {
+    .timer span {
         font-size: 3rem;
         margin-left: 0.8rem;
     }
 
-    .countdown span:first-of-type {
+    .timer span:first-of-type {
         margin-left: 0;
     }
 
@@ -101,7 +104,7 @@
         color:black
     }
 
-    .countdown input {
+    .timer input {
         border: none;
         background-color: transparent;
         display: inline;
@@ -111,8 +114,42 @@
         padding: none;
         outline: none;
         width:2.2ch;
-      }
+    }
 
     .timer-inactive {
+        margin: 0;
         color:gray;
+    }
+
+    .timer-active {
+        margin: 0;
+    }
+
+    .countdown-done {
+        background-color: pink;
+    }
+
+    .btn-timer-close {
+        position: relative;
+        float: right;
+        top: .5rem;
+        right: .5rem;
+        box-shadow: none;
+    }
+
+    .btn-close:focus {
+        box-shadow: none;
+    }
+
+    #countdown-mini {
+        width:fit-content;
+        margin:auto;
+    }
+    
+    .timer-mini {
+        margin:auto;
+    }
+
+    .timer-text {
+        width:2.2ch;
     }
