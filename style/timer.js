@@ -29,7 +29,6 @@ document.getElementById("btn-timer-new").addEventListener("click",function(){
 			countdown.dataset.state = "active";
 
 			btn.innerText = "Pause";
-			console.log(countdown)
 			run_clock(countdown, deadline);
 		}
 		else if (countdown.dataset.state == "active") {
@@ -112,7 +111,7 @@ function time_remaining(endtime){
 		var hours = Math.floor( (t/(1000*60*60)) % 24 );
 		var days = Math.floor( t/(1000*60*60*24) );
 		return {'total':t, 'days':days, 'hours':hours, 'minutes':minutes, 'seconds':seconds};
-	}
+}
 
 function run_clock(countdown, endtime){
 		function update_clock(){
@@ -120,14 +119,20 @@ function run_clock(countdown, endtime){
 			const minutes = countdown.getElementsByClassName("timer-min")[0];
 			const seconds = countdown.getElementsByClassName("timer-sec")[0];
 			
-			minutes.innerText = t.minutes;
-			seconds.innerText = t.seconds;
-
-			if(t.total <= 0){
+			if (t.total < 0){
 				clearInterval(Number(countdown.dataset.interval));
 				countdown.classList.add("countdown-done");
+			}
+			else if (t.total == 0){
+				countdown.classList.add("countdown-done");
+				minutes.innerText = 0;
+				seconds.innerText = 0;
+			}
+			else {
+				minutes.innerText = t.minutes;
+				seconds.innerText = t.seconds;
 			}
 		}
 		update_clock(); // run function once at first to avoid delay
 		countdown.dataset.interval = setInterval(update_clock,1000);
-	}
+}
