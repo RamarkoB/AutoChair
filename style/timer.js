@@ -7,6 +7,7 @@ document.getElementById("btn-timer-new").addEventListener("click",function(){
 	countdown.id = "";
 
 	countdown.dataset.state = "inactive";
+	countdown.dataset.mini = "unlinked";
 	const timer = countdown.getElementsByClassName("timer")[0];
 	const btn = countdown.getElementsByClassName("btn-timer-multiuse")[0];
 	const reset = countdown.getElementsByClassName("btn-timer-reset")[0];
@@ -113,26 +114,59 @@ function time_remaining(endtime){
 		return {'total':t, 'days':days, 'hours':hours, 'minutes':minutes, 'seconds':seconds};
 }
 
+function num_to_string(num){
+	if (num < 10){
+		return "0" + String(num);
+	}
+	else {
+		return String(num);
+	}
+}
+
 function run_clock(countdown, endtime){
-		function update_clock(){
-			const t = time_remaining(endtime);
-			const minutes = countdown.getElementsByClassName("timer-min")[0];
-			const seconds = countdown.getElementsByClassName("timer-sec")[0];
-			
-			if (t.total < 0){
+	function update_clock(){
+		const t = time_remaining(endtime);
+		const minutes = countdown.getElementsByClassName("timer-min")[0];
+		const seconds = countdown.getElementsByClassName("timer-sec")[0];
+
+		if (countdown.dataset.mini == "linked") {	
+			const miniMinutes = document.getElementById("timer-mini-min");
+			const miniSeconds = document.getElementById("timer-mini-sec");	
+			if (t.total <= 0){
 				clearInterval(Number(countdown.dataset.interval));
 				countdown.classList.add("countdown-done");
-			}
-			else if (t.total == 0){
-				countdown.classList.add("countdown-done");
-				minutes.innerText = 0;
-				seconds.innerText = 0;
+				document.getElementById("timer-mini").classList.add("countdown-done");
+		
+				minutes.innerText = "00";
+				seconds.innerText = "00";
+		
+				miniMinutes.innerText = "00";
+				miniSeconds.innerText = "00";
 			}
 			else {
-				minutes.innerText = t.minutes;
-				seconds.innerText = t.seconds;
+				minutes.innerText = num_to_string(t.minutes);
+				seconds.innerText = num_to_string(t.seconds);
+		
+				miniMinutes.innerText = num_to_string(t.minutes);
+				miniSeconds.innerText = num_to_string(t.seconds);
 			}
 		}
-		update_clock(); // run function once at first to avoid delay
-		countdown.dataset.interval = setInterval(update_clock,1000);
+		else {	
+			if (t.total <= 0){
+				clearInterval(Number(countdown.dataset.interval));
+				countdown.classList.add("countdown-done");
+
+				minutes.innerText = "00";
+				seconds.innerText = "00";
+			}
+			else {
+				minutes.innerText = num_to_string(t.minutes);
+				seconds.innerText = num_to_string(t.seconds);
+			}
+		}
+
+	}
+
+	update_clock(); // run function once at first to avoid delay
+	countdown.dataset.interval = setInterval(update_clock,1000);
 }

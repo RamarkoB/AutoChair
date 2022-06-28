@@ -2,19 +2,11 @@
 <head>
     <title>Ramarko's Auto Chair</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="../style/styles.css" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script defer src="script.js"></script>
 </head>
 
 <html>
-  <header>
-    <a href="../style/home.html">
-        <h1 class="header-txt fw-bold text-uppercase">AutoChair</h1>
-    </a>
-  </header>
-    
-  <body class="d-flex flex-column h-100">
     <!-- Modal -->
     <div class="modal fade" id="errorModal" tabindex="-1"  aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -52,9 +44,6 @@
           </li>
           <li class="nav-item" role="presentation">
             <button class="nav-link text-uppercase fw-bold"" id="pills-directives-tab" data-bs-toggle="pill" data-bs-target="#pills-directives" type="button" role="tab" aria-controls="pills-directives" aria-selected="false">Directives</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link text-uppercase fw-bold"" id="pills-timer-tab" data-bs-toggle="pill" data-bs-target="#pills-timer" type="button" role="tab" aria-controls="pills-timer" aria-selected="false">Timer</button>
           </li>
         </ul>   
       
@@ -124,28 +113,9 @@
             </div>
             <div id="foragainst"></div>
           </div>
-    
-          <!-- Timers Tab-->
-          <div class="tab-pane fade" id="pills-timer" role="tabpanel" aria-labelledby="pills-timer-tab">
-              <!-- Countdowns space -->
-              <div id="countdownDiv" class="col-lg-8 mx-auto">
-                <div id="timerBtnDiv" class="my-2 text-center">
-                  <button type="button" id="btn-timer-new" class="btn btn-demo">Add Timer</button>
-                </div>
-              </div>
-          </div>
         </div>
     </main>
-  </body>
 
-  <footer>
-    <h1 class="header-txt fw-bold text-uppercase"> Hello</h1>
-  </footer>
-
-  <script>
-    const movie = localStorage.getItem('favoriteMovie');
-    console.log(movie.split("`,`"));
-  </script>
 </html>
 
 

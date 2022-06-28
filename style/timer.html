@@ -8,10 +8,22 @@
 
 <html lang="en" class="h-100">
     <header>
-        <a href="home.html">
-            <h1 class="header-txt fw-bold text-uppercase">AutoChair</h1>
-        </a>
-    </header>
+		<nav class="navbar navbar-light navbar-expand-md d-flex py-3">
+			<div class="container"><a class="navbar-brand" href="home.html"><strong class="text-uppercase d-flex" style="font-family: Futura;letter-spacing: 10px;">AutoChair</strong></a>
+				<div id="timer-mini" class="border rounded border-2 border-dark d-flex d-sm-flex d-md-flex d-lg-flex justify-content-center align-items-center align-content-center align-items-sm-center align-items-md-center align-items-lg-center" style="width: 200px;height: 50px;">
+					<div style="margin-right: 15px;width: fit-content;">
+						<p class="fs-3 fw-normal d-lg-flex" style="font-size: 25px;margin-top: auto;margin-bottom: auto;width: fit-content;">
+							<span id="timer-mini-min">00</span>:
+							<span id="timer-mini-sec">00</span>
+						</p>
+					</div>
+					<div style="width: fit-content;">
+						<button class="btn btn-dark rounded-pill" type="button" style="line-height: 20px;"><i class="bi bi-arrow-counterclockwise"></i></button>
+						<button class="btn btn-dark rounded-pill" type="button" style="line-height: 20px;"><i class="bi bi-pause-fill"></i></button></div>
+				</div>
+			</div>
+		</nav>
+	</header>
 
     <body class="d-flex flex-column h-100">
         <!-- Begin page content -->
